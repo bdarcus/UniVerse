@@ -21,7 +21,7 @@ const Events: React.FC<EventsProps> = ({ onViewChange }) => {
       category: 'Workshops',
       reward: '+100 XP',
       badge: 'Leadership',
-      image: 'https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?auto=format&fit=crop&q=80&w=800',
+      image: 'https://picsum.photos/seed/summit/800/600',
       registered: false
     },
     {
@@ -33,7 +33,7 @@ const Events: React.FC<EventsProps> = ({ onViewChange }) => {
       category: 'Volunteer',
       reward: '3 Service Hrs',
       badge: 'Civic Engagement',
-      image: 'https://images.unsplash.com/photo-1591079838758-6c7672719eb7?auto=format&fit=crop&q=80&w=800',
+      image: 'https://picsum.photos/seed/garden/800/600',
       registered: true
     },
     {
@@ -45,7 +45,7 @@ const Events: React.FC<EventsProps> = ({ onViewChange }) => {
       category: 'Workshops',
       reward: '+50 XP',
       badge: 'Professional Dev',
-      image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800',
+      image: 'https://picsum.photos/seed/symposium/800/600',
       registered: false
     },
     {
@@ -57,7 +57,7 @@ const Events: React.FC<EventsProps> = ({ onViewChange }) => {
       category: 'Competitions',
       reward: 'Gold Badge Link',
       badge: 'Innovation',
-      image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800',
+      image: 'https://picsum.photos/seed/hacksprint/800/600',
       registered: false
     }
   ];
