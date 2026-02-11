@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { View } from '../types';
 
@@ -107,7 +106,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
                   month="NOV" 
                   day="12" 
                   title="Algorithm Analysis Paper" 
-                  sub="CS 301 • Dr. Smith" 
+                  sub="CS 301 - Dr. Smith" 
                   tags={['Research', 'High Priority']} 
                   isAlert 
                   onClick={() => onViewChange(View.SUBMISSION)}
@@ -116,7 +115,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
                   month="NOV" 
                   day="15" 
                   title="Midterm Reflection" 
-                  sub="ETHICS 101 • Prof. Lee" 
+                  sub="ETHICS 101 - Prof. Lee" 
                   onClick={() => onViewChange(View.SUBMISSION)}
                 />
               </div>

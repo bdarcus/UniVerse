@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { View } from '../types';
 import { GoogleGenAI } from "@google/genai";
