@@ -76,7 +76,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
               date="Nov 02, 2023"
               description="Exploration of D3.js libraries for presenting complex sociological datasets."
               status="DRAFT"
-              imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
+              imageUrl="https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=800"
               onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-2")}
             />
           </div>
