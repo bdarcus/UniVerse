@@ -14,6 +14,9 @@ Move beyond simple grades. UniVerse provides a sophisticated digital vault where
 ### Extracurricular Passport
 Verify your impact. Our gamified badge system tracks growth in critical areas like **Global Leadership**, **Civic Engagement**, and **Innovation**. Every badge is backed by a serial-coded evidence log, making achievements undeniable.
 
+### Gemini-Powered Career Coaching
+Harness the power of **Google Gemini 3 Pro**. Our AI Career Coach doesn't just give advice—it analyzes your specific portfolio and passport data to find real-world internships, identify skill gaps, and provide strategic career insights.
+
 ---
 
 ## The UniVerse Experience
@@ -21,22 +24,20 @@ Verify your impact. Our gamified badge system tracks growth in critical areas li
 ### 1. The Student Command Center
 The Dashboard offers a high-fidelity overview of your academic standing, passport progress, and upcoming milestones. It’s designed for clarity, helping you stay ahead of deadlines while tracking your path to the "Gold Tier" scholar status.
 
-![UniVerse Dashboard Concept](resources/img/dash.png)
+![UniVerse Dashboard](./screenshots/dashboard.png)
 *Modern, card-based interface providing real-time stats and artifact previews.*
 
 ### 2. Deep-Link Achievement Detail
 Achievements aren't just icons. Every badge and artifact has a dedicated detail page showing the full story: the evidence provided, the faculty who verified it, and the specific skills it validates for your future career.
 
-### 3. Integrated Assessement
-Assessement is deeply-integrated from the beginning, for students and faculty alike.
+![Portfolio & Badge Detail](./screenshots/portfolio.png)
+*Clean, document-centric views that showcase the depth of student work.*
 
-Here's a student view:
+### 3. AI-Driven Career Analysis
+Interact with a career coach that knows you better than any generic LLM. By grounding its responses in your actual achievements, the coach provides hyper-personalized paths and live internship searches.
 
-![A student view of an artifact submission, with assessment metrics](resources/img/student-assess.png)
-
-And a faculty view:
-
-![A faculty view where they assess a student artifact](resources/img/faculty-assess.png)
+![AI Coach Consultation](./screenshots/coach.png)
+*Intelligent chat interface powered by Gemini, grounded in real student data.*
 
 ---
 
