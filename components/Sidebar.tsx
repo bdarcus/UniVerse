@@ -13,31 +13,37 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
   ];
 
   const academicItems = [
-    { id: View.PORTFOLIO, label: 'My Portfolio', icon: 'folder_shared' },
+    { id: View.PORTFOLIO, label: 'Unified Portfolio', icon: 'collections_bookmark' },
     { id: View.SUBMISSION, label: 'Assessments', icon: 'assignment', badge: 3 },
   ];
 
   const extracurricularItems = [
     { id: View.ASSESSMENT, label: 'Faculty View', icon: 'rate_review' },
-    { id: View.EVENTS, label: 'Events', icon: 'event' },
+    { id: View.EVENTS, label: 'Opportunity Catalog', icon: 'explore' },
   ];
 
-  // Fix: Explicitly type NavLink as a React Functional Component to handle 'key' prop correctly
-  const NavLink: React.FC<{ item: { id: View; label: string; icon: string; badge?: number } }> = ({ item }) => (
+  const aiItems = [
+    { id: View.COACH, label: 'Career Coach', icon: 'auto_awesome', isNew: true },
+  ];
+
+  const NavLink: React.FC<{ item: { id: View; label: string; icon: string; badge?: number; isNew?: boolean } }> = ({ item }) => (
     <button
       onClick={() => onViewChange(item.id)}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors relative group ${
         activeView === item.id
           ? 'bg-primary/10 text-primary dark:text-white'
           : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
       }`}
     >
-      <span className="material-icons text-[20px]">{item.icon}</span>
+      <span className={`material-icons text-[20px] ${item.id === View.COACH ? 'text-purple-500' : ''}`}>{item.icon}</span>
       <span className="font-medium text-sm">{item.label}</span>
       {item.badge && (
         <span className="ml-auto bg-primary/10 text-primary text-xs font-bold px-2 py-0.5 rounded-full">
           {item.badge}
         </span>
+      )}
+      {item.isNew && (
+        <span className="ml-auto w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
       )}
     </button>
   );
@@ -59,6 +65,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
         
         <div className="pt-4 pb-2 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Extracurricular</div>
         {extracurricularItems.map(item => <NavLink key={item.id} item={item} />)}
+
+        <div className="pt-4 pb-2 px-4 text-xs font-semibold text-purple-400 uppercase tracking-wider">AI Insight</div>
+        {aiItems.map(item => <NavLink key={item.id} item={item} />)}
         
         <div className="pt-4 pb-2 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">System</div>
         <button

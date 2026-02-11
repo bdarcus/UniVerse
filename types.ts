@@ -5,7 +5,8 @@ export enum View {
   SUBMISSION = 'submission',
   ASSESSMENT = 'assessment',
   EVENTS = 'events',
-  SETTINGS = 'settings'
+  SETTINGS = 'settings',
+  COACH = 'coach'
 }
 
 export interface PortfolioItem {

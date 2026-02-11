@@ -48,13 +48,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
         <section className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <span className="material-icons text-primary">folder_shared</span> My Portfolio
+              <span className="material-icons text-primary">collections_bookmark</span> Recent Artifacts
             </h2>
             <button 
               onClick={() => onViewChange(View.PORTFOLIO)}
               className="text-sm font-medium text-primary hover:text-primary-dark"
             >
-              View All Projects
+              View Full Portfolio
             </button>
           </div>
           

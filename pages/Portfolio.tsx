@@ -1,121 +1,169 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
 const Portfolio: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'passport' | 'artifacts'>('passport');
+
   return (
-    <div className="animate-in slide-in-from-bottom-4 duration-500">
+    <div className="animate-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
               <span className="hover:text-primary cursor-pointer">Home</span>
               <span className="material-icons text-xs">chevron_right</span>
-              <span className="text-primary font-medium">Passport</span>
+              <span className="text-primary font-medium">Portfolio</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">My Extracurricular Passport</h1>
-            <p className="text-slate-600 dark:text-slate-400 max-w-2xl">Track your journey beyond the classroom. Complete achievements to earn badges and unlock new opportunities.</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Unified Portfolio</h1>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl">
+              A comprehensive record of your academic artifacts and extracurricular milestones.
+            </p>
           </div>
           <div className="flex items-center gap-3">
             <button className="inline-flex items-center px-4 py-2.5 border border-slate-300 dark:border-slate-600 shadow-sm text-sm font-medium rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-              <span className="material-icons text-base mr-2">download</span>
-              Download PDF
+              <span className="material-icons text-base mr-2">ios_share</span>
+              Export
             </button>
             <button className="inline-flex items-center px-4 py-2.5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-primary hover:bg-blue-700 transition-all shadow-blue-500/25">
-              <span className="material-icons text-base mr-2">share</span>
-              Share Public Profile
+              <span className="material-icons text-base mr-2">public</span>
+              Public Profile
             </button>
           </div>
         </header>
 
-        {/* Stats Summary */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatMiniCard icon="military_tech" label="Badges Earned" value="12" color="blue" />
-          <StatMiniCard icon="schedule" label="Hours Logged" value="48.5" color="green" />
-          <StatMiniCard icon="trending_up" label="Current Level" value="Gold" color="purple" />
-          <StatMiniCard icon="pending_actions" label="In Progress" value="5" color="orange" />
-        </section>
-
-        {/* Filters */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white dark:bg-[#151b2b] p-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
-          <div className="flex p-1 space-x-1 bg-slate-100 dark:bg-slate-800 rounded-lg w-full sm:w-auto overflow-x-auto">
-            {['All', 'Professional Dev', 'Community Service', 'Campus Life', 'Leadership'].map((tab, idx) => (
-              <button 
-                key={tab}
-                className={`flex-shrink-0 px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                  idx === 0 ? 'bg-white dark:bg-slate-700 shadow-sm text-primary dark:text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/50'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-          <div className="relative w-full sm:w-64">
-            <input className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Search achievements..." type="text"/>
-            <span className="material-icons absolute left-3 top-2.5 text-slate-400 text-lg">search</span>
-          </div>
+        {/* Tab System */}
+        <div className="flex border-b border-slate-200 dark:border-slate-800">
+          <button 
+            onClick={() => setActiveTab('passport')}
+            className={`px-8 py-4 text-sm font-bold transition-all relative ${
+              activeTab === 'passport' 
+                ? 'text-primary' 
+                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+            }`}
+          >
+            Passport (Badges)
+            {activeTab === 'passport' && (
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
+            )}
+          </button>
+          <button 
+            onClick={() => setActiveTab('artifacts')}
+            className={`px-8 py-4 text-sm font-bold transition-all relative ${
+              activeTab === 'artifacts' 
+                ? 'text-primary' 
+                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+            }`}
+          >
+            Artifacts (Projects)
+            {activeTab === 'artifacts' && (
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
+            )}
+          </button>
         </div>
 
-        {/* Achievement Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
-          <AchievementCard 
-            icon="school" 
-            title="Career Readiness Workshop" 
-            category="Professional Dev" 
-            description="Completed the foundational workshop series covering resume building, interview skills, and networking basics."
-            progress={100}
-            status="COMPLETED"
-            footer="Oct 24, 2023"
-          />
-          <AchievementCard 
-            icon="volunteer_activism" 
-            title="Civic Engagement Leader" 
-            category="Community Service" 
-            description="Lead at least 3 community service events and log 20+ hours of volunteer work."
-            progress={75}
-            progressText="15 / 20 Hours"
-            footer="Last updated 2d ago"
-            actionLabel="Log Hours"
-          />
-          <AchievementCard 
-            icon="groups" 
-            title="Club Officer Track" 
-            category="Campus Life" 
-            description="Hold an officer position in a registered student organization for one full academic semester."
-            progress={25}
-            progressText="1 / 4 Months"
-            footer="Ongoing"
-            actionLabel="Details"
-          />
-          <AchievementCard 
-            icon="emoji_events" 
-            title="Executive Leadership Gold" 
-            category="Leadership" 
-            description="Complete the Silver Leadership tier to unlock this advanced certification program."
-            progress={0}
-            status="LOCKED"
-            footer="Prerequisites Required"
-          />
-          <AchievementCard 
-            icon="public" 
-            title="Study Abroad Prep" 
-            category="Global Learning" 
-            description="Pre-departure cultural competency training and logistics planning sessions."
-            progress={100}
-            status="COMPLETED"
-            footer="Sep 15, 2023"
-          />
-          <div className="group relative bg-slate-50 dark:bg-[#151b2b]/50 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-[#151b2b] transition-all duration-300 flex flex-col items-center justify-center h-full p-8 text-center cursor-pointer min-h-[300px]">
-            <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-primary/10 flex items-center justify-center mb-4 transition-colors">
-              <span className="material-icons text-3xl text-slate-400 group-hover:text-primary">add</span>
+        {activeTab === 'passport' ? (
+          <div className="space-y-8 animate-in fade-in duration-300">
+            {/* Stats Summary */}
+            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <StatMiniCard icon="military_tech" label="Badges Earned" value="12" color="blue" />
+              <StatMiniCard icon="schedule" label="Hours Logged" value="48.5" color="green" />
+              <StatMiniCard icon="trending_up" label="Current Level" value="Gold" color="purple" />
+              <StatMiniCard icon="pending_actions" label="In Progress" value="5" color="orange" />
+            </section>
+
+            {/* Achievement Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <AchievementCard 
+                icon="school" 
+                title="Career Readiness Workshop" 
+                category="Professional Dev" 
+                description="Completed the foundational workshop series covering resume building, interview skills, and networking basics."
+                progress={100}
+                status="COMPLETED"
+                footer="Oct 24, 2023"
+              />
+              <AchievementCard 
+                icon="volunteer_activism" 
+                title="Civic Engagement Leader" 
+                category="Community Service" 
+                description="Lead at least 3 community service events and log 20+ hours of volunteer work."
+                progress={75}
+                progressText="15 / 20 Hours"
+                footer="Last updated 2d ago"
+                actionLabel="Log Hours"
+              />
+              <AchievementCard 
+                icon="groups" 
+                title="Club Officer Track" 
+                category="Campus Life" 
+                description="Hold an officer position in a registered student organization for one full academic semester."
+                progress={25}
+                progressText="1 / 4 Months"
+                footer="Ongoing"
+                actionLabel="Details"
+              />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Discover More</h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xs mx-auto">Browse the opportunity catalog to find new ways to earn badges and build your passport.</p>
           </div>
-        </div>
+        ) : (
+          <div className="space-y-8 animate-in fade-in duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <ArtifactProjectCard 
+                title="Capstone: Renewable Grid" 
+                category="Engineering" 
+                status="GRADED" 
+                grade="A"
+                imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuDpcwarmj8eDYdna4LOX86k2_3NWohSBnaR_paXMKB7RiXnhZrRCxQxZ7uPp9muAt7VdSXOdZbGHNbHHV_TVyKN5r6XZtyyh_lUgHM-2SWy6vSeJjYAvnZwAXOIneSOItQD7LKwTBGN9wZVFxtuOigZQsLJC6lCY-y9FE0_YR8kjwHwlgVyndLtJHuQQY5zLa2BIRZiHrE5tFWJXTRgENGKE7fNRcCsZULzDeXxchMx673n5sudgCdBgWSJmd67i6_lwEDSAHoGw8o"
+              />
+              <ArtifactProjectCard 
+                title="Visualization Techniques" 
+                category="Data Science" 
+                status="GRADED" 
+                grade="B+"
+                imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuB_civ_aUIPSohNq2nIsfc3LiPZrxpK6-u4lOxI-8ca6oW2Tba0E6eCc7Z1SPfET8a0DV18sY_QmZRVHc4D8hGtO77TJNSl7N2sN6ZBMRiC7HCC-MR6Np1NiHLIqCjAxG3nk-gk33iqrOXbeJoHsGk_EoVozkcM7uTidoCepPEmqsq0mBowHusJs_TSdC0L67ZCLnhHgfo_410q4tKIIqXZRQbkJ74jafee4PBLqvEPEkjtafpZoJf9-GVHkTNtTW02Xnchk9gm3ZY"
+              />
+              <ArtifactProjectCard 
+                title="Ethics in AI" 
+                category="Philosophy" 
+                status="PENDING" 
+                imageUrl="https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&q=80&w=400"
+              />
+              <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer">
+                <span className="material-icons text-3xl text-slate-400 group-hover:text-primary mb-2">add_circle_outline</span>
+                <p className="text-sm font-bold text-slate-600 dark:text-slate-400">Add Project Artifact</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
+const ArtifactProjectCard = ({ title, category, status, grade, imageUrl }: any) => (
+  <div className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group">
+    <div className="h-44 relative overflow-hidden">
+      <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+      <div className="absolute bottom-4 left-4">
+        <span className="text-white font-bold text-lg">{title}</span>
+      </div>
+      {grade && (
+        <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-2 border-primary">
+          <span className="text-primary font-bold">{grade}</span>
+        </div>
+      )}
+    </div>
+    <div className="p-4 flex items-center justify-between">
+      <div>
+        <span className="text-[10px] font-bold uppercase text-slate-400 tracking-widest">{category}</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className={`w-2 h-2 rounded-full ${status === 'GRADED' ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
+        <span className="text-xs font-medium text-slate-600 dark:text-slate-400">{status}</span>
+      </div>
+    </div>
+  </div>
+);
 
 const StatMiniCard = ({ icon, label, value, color }: any) => {
   const colors: any = {

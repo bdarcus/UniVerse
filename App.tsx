@@ -9,6 +9,7 @@ import Submission from './pages/Submission';
 import Assessment from './pages/Assessment';
 import Events from './pages/Events';
 import Settings from './pages/Settings';
+import CareerCoach from './pages/CareerCoach';
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>(View.DASHBOARD);
@@ -28,6 +29,8 @@ const App: React.FC = () => {
         return <Events />;
       case View.SETTINGS:
         return <Settings />;
+      case View.COACH:
+        return <CareerCoach />;
       default:
         return (
           <div className="p-8 text-center">
