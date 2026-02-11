@@ -33,7 +33,7 @@ const Events: React.FC<EventsProps> = ({ onViewChange }) => {
       category: 'Volunteer',
       reward: '3 Service Hrs',
       badge: 'Civic Engagement',
-      image: 'https://picsum.photos/id/116/800/600',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/6/62/2007_Comella_community_garden_ClevelandOH_1353039387.jpg',
       registered: true
     },
     {
