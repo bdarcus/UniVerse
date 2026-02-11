@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from '../types';
+import { assignments } from '../data';
 
 interface DashboardProps {
   onViewChange: (view: View) => void;
@@ -102,22 +103,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
             <div>
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Upcoming Due Dates</h3>
               <div className="space-y-4">
-                <DueItem 
-                  month="NOV" 
-                  day="12" 
-                  title="Algorithm Analysis Paper" 
-                  sub="CS 301 - Dr. Smith" 
-                  tags={['Research', 'High Priority']} 
-                  isAlert 
-                  onClick={() => onViewChange(View.SUBMISSION)}
-                />
-                <DueItem 
-                  month="NOV" 
-                  day="15" 
-                  title="Midterm Reflection" 
-                  sub="ETHICS 101 - Prof. Lee" 
-                  onClick={() => onViewChange(View.SUBMISSION)}
-                />
+                {assignments.map(asg => (
+                  <DueItem 
+                    key={asg.id}
+                    month={asg.month} 
+                    day={asg.day} 
+                    title={asg.title} 
+                    sub={`${asg.course} - ${asg.instructor}`} 
+                    tags={asg.isHighPriority ? [asg.category, 'High Priority'] : [asg.category]} 
+                    isAlert={asg.isHighPriority} 
+                    onClick={() => onNavigateDetail(View.SUBMISSION, asg.id)}
+                  />
+                ))}
               </div>
             </div>
             

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { View } from '../types';
+import { portfolioItems } from '../data';
 
 interface CareerCoachProps {
   onViewChange?: (view: View) => void;
@@ -17,12 +18,12 @@ const CareerCoach: React.FC<CareerCoachProps> = ({ onViewChange }) => {
     major: "Computer Science",
     year: "Senior",
     badged: ["Global Leadership", "Innovation", "Civic Engagement"],
-    keyArtifact: "Capstone Renewable Grid Project"
+    artifacts: portfolioItems.map(item => `${item.title} (${item.category}): ${item.description}`)
   };
 
   const analyzeCareer = async () => {
     if (!query && !response) {
-      setQuery("Analyze my portfolio and find matching internships in renewable energy.");
+      setQuery("Analyze my current portfolio and find matching internships or career paths.");
     }
     
     setIsAnalyzing(true);
@@ -35,8 +36,10 @@ const CareerCoach: React.FC<CareerCoachProps> = ({ onViewChange }) => {
         model: 'gemini-3-pro-preview',
         contents: `Student is a ${studentProfile.year} ${studentProfile.major} student. 
         Earned Badges: ${studentProfile.badged.join(', ')}. 
-        Key Project: ${studentProfile.keyArtifact}. 
-        Request: ${query || "Based on my skills, what are 3 career paths I should consider and find real internship listings for them."}`,
+        Portfolio Projects:
+        ${studentProfile.artifacts.join('\n')}
+        
+        Request: ${query || "Based on my skills and projects, what are 3 career paths I should consider and find real internship listings for them."}`,
         config: {
           tools: [{ googleSearch: {} }]
         }
@@ -152,13 +155,13 @@ const CareerCoach: React.FC<CareerCoachProps> = ({ onViewChange }) => {
             <div className="space-y-4">
               <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-100 dark:border-purple-800">
                 <p className="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase mb-1">Top Alignment</p>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">Sustainable Systems Design</p>
-                <p className="text-xs text-slate-500 mt-1">Matched via Capstone + Innovation Badge</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">{portfolioItems[0]?.title || "Generalist"}</p>
+                <p className="text-xs text-slate-500 mt-1">Matched via {portfolioItems[0]?.category} Artifact</p>
               </div>
               <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
                 <p className="text-xs font-bold text-slate-400 uppercase mb-1">Secondary Path</p>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">Public Policy Consultant</p>
-                <p className="text-xs text-slate-500 mt-1">Matched via Civic Engagement Badge</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">{portfolioItems[1]?.title || "Professionalism"}</p>
+                <p className="text-xs text-slate-500 mt-1">Matched via {portfolioItems[1]?.category} Artifact</p>
               </div>
             </div>
             

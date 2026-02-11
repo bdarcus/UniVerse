@@ -30,7 +30,7 @@ const App: React.FC = () => {
       case View.PORTFOLIO:
         return <Portfolio onViewChange={setActiveView} onNavigateDetail={navigateToDetail} />;
       case View.SUBMISSION:
-        return <Submission onViewChange={setActiveView} />;
+        return <Submission id={selectedItemId} onViewChange={setActiveView} />;
       case View.ASSESSMENT:
         return <Assessment onViewChange={setActiveView} />;
       case View.EVENTS:

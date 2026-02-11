@@ -2,18 +2,21 @@
 import React, { useState } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { View } from '../types';
+import { assignments } from '../data';
 
 interface SubmissionProps {
+  id?: string | null;
   onViewChange: (view: View) => void;
 }
 
-const Submission: React.FC<SubmissionProps> = ({ onViewChange }) => {
+const Submission: React.FC<SubmissionProps> = ({ id, onViewChange }) => {
   const [reflection, setReflection] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [aiFeedback, setAiFeedback] = useState<string | null>(null);
   
-  const artifactName = 'Global Leadership Reflection';
+  const assignment = assignments.find(a => a.id === id) || assignments[2]; // Default to Leadership
+  const artifactName = assignment.title;
 
   const runSelfCheck = async () => {
     if (!reflection || reflection.length < 50) {
@@ -25,12 +28,12 @@ const Submission: React.FC<SubmissionProps> = ({ onViewChange }) => {
     setAiFeedback(null);
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const prompt = `You are an academic writing coach. Analyze this student draft:
+      const rubricText = assignment.rubric.map(c => `${c.title}: ${c.description}`).join('\n');
+      const prompt = `You are an academic writing coach. Analyze this student draft for the assignment "${assignment.title}":
       "${reflection}"
       
       Against these rubric criteria:
-      1. Critical Thinking: Depth of analysis and evidence usage.
-      2. Written Communication: Clarity and professional structure.
+      ${rubricText}
       
       Provide 3 specific bullet points on how to improve the score. Be encouraging but rigorous.`;
       
@@ -72,7 +75,7 @@ const Submission: React.FC<SubmissionProps> = ({ onViewChange }) => {
                 Dashboard
               </button>
               <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{artifactName}</h1>
-              <p className="text-sm text-slate-500">Unit 4: Senior Experience • Due Oct 24</p>
+              <p className="text-sm text-slate-500">{assignment.course} • Due {assignment.month} {assignment.day}</p>
             </div>
             <div className="flex gap-2">
                <button className="p-2 text-slate-400 hover:text-primary transition-colors"><span className="material-icons">print</span></button>
@@ -161,18 +164,15 @@ const Submission: React.FC<SubmissionProps> = ({ onViewChange }) => {
           </div>
 
           <div className="space-y-6">
-            <RubricGuide 
-              title="Critical Thinking" 
-              weight="50%" 
-              desc="Analysis of field data and innovative problem-solving (e.g. Micro-subscription models)."
-              active={reflection.includes('Guatemala') || reflection.includes('subscription')}
-            />
-            <RubricGuide 
-              title="Written Communication" 
-              weight="50%" 
-              desc="Structure, clarity, and use of academic citations (e.g. APA style)."
-              active={reflection.includes('(') && reflection.includes(')')}
-            />
+            {assignment.rubric.map(criterion => (
+              <RubricGuide 
+                key={criterion.id}
+                title={criterion.title} 
+                weight={criterion.weight} 
+                desc={criterion.description}
+                active={reflection.toLowerCase().includes(criterion.title.toLowerCase().split(' ')[0])}
+              />
+            ))}
           </div>
         </div>
 

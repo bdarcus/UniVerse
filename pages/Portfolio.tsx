@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View } from '../types';
+import { portfolioItems } from '../data';
 
 interface PortfolioProps {
   onViewChange: (view: View) => void;
@@ -115,29 +116,17 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
         ) : (
           <div className="space-y-8 animate-in fade-in duration-300 text-left">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <ArtifactProjectCard 
-                title="Capstone: Renewable Grid" 
-                category="Engineering" 
-                status="GRADED" 
-                grade="A"
-                imageUrl="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800"
-                onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-1")}
-              />
-              <ArtifactProjectCard 
-                title="Visualization Techniques" 
-                category="Data Science" 
-                status="GRADED" 
-                grade="B+"
-                imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
-                onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-2")}
-              />
-              <ArtifactProjectCard 
-                title="Ethics in AI" 
-                category="Philosophy" 
-                status="PENDING" 
-                imageUrl="https://images.unsplash.com/photo-1620712943543-bcc4628c6720?auto=format&fit=crop&q=80&w=800"
-                onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-3")}
-              />
+              {portfolioItems.map(item => (
+                <ArtifactProjectCard 
+                  key={item.id}
+                  title={item.title} 
+                  category={item.category} 
+                  status={item.status} 
+                  grade={item.grade}
+                  imageUrl={item.imageUrl}
+                  onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, item.id)}
+                />
+              ))}
               <div 
                 onClick={() => onViewChange(View.SUBMISSION)}
                 className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer h-full min-h-[250px]"

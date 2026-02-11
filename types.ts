@@ -37,3 +37,24 @@ export interface Achievement {
   passportId: string;
   skills: string[];
 }
+
+export interface RubricCriterion {
+  id: string;
+  title: string;
+  weight: string;
+  description: string;
+}
+
+export interface Assignment {
+  id: string;
+  title: string;
+  course: string;
+  instructor: string;
+  dueDate: string;
+  month: string;
+  day: string;
+  category: string;
+  description: string;
+  isHighPriority?: boolean;
+  rubric: RubricCriterion[];
+}
