@@ -7,6 +7,8 @@ import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import Submission from './pages/Submission';
 import Assessment from './pages/Assessment';
+import Events from './pages/Events';
+import Settings from './pages/Settings';
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>(View.DASHBOARD);
@@ -22,16 +24,20 @@ const App: React.FC = () => {
         return <Submission />;
       case View.ASSESSMENT:
         return <Assessment />;
+      case View.EVENTS:
+        return <Events />;
+      case View.SETTINGS:
+        return <Settings />;
       default:
         return (
           <div className="p-8 text-center">
-            <h2 className="text-2xl font-bold">Coming Soon</h2>
-            <p className="text-slate-500">The {activeView} feature is under development.</p>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Under Construction</h2>
+            <p className="text-slate-500 mt-2">The {activeView} feature is being polished.</p>
             <button 
               onClick={() => setActiveView(View.DASHBOARD)}
-              className="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
+              className="mt-6 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
             >
-              Go to Dashboard
+              Back to Dashboard
             </button>
           </div>
         );
@@ -46,13 +52,13 @@ const App: React.FC = () => {
   return (
     <div className={`flex h-screen overflow-hidden ${isDarkMode ? 'dark' : ''}`}>
       <Sidebar activeView={activeView} onViewChange={setActiveView} />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark">
         <TopHeader 
-          viewTitle={activeView.charAt(0).toUpperCase() + activeView.slice(1)} 
+          viewTitle={activeView === View.DASHBOARD ? 'Dashboard' : activeView.charAt(0).toUpperCase() + activeView.slice(1)} 
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
         />
-        <main className="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark">
+        <main className="flex-1 overflow-y-auto">
           {renderContent()}
         </main>
       </div>

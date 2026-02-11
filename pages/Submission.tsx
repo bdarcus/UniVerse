@@ -50,10 +50,16 @@ const Submission: React.FC = () => {
                 <span className="material-icons-outlined text-primary">upload_file</span>
                 Artifact Upload
               </h2>
-              <button className="text-xs font-medium text-primary hover:text-primary-dark flex items-center gap-1">
-                <span className="material-icons-outlined text-sm">link</span>
-                Add Link
-              </button>
+              <div className="flex gap-3">
+                <button className="text-xs font-bold text-primary hover:text-primary-dark flex items-center gap-1">
+                  <span className="material-icons-outlined text-sm">photo_camera</span>
+                  Capture
+                </button>
+                <button className="text-xs font-bold text-primary hover:text-primary-dark flex items-center gap-1">
+                  <span className="material-icons-outlined text-sm">link</span>
+                  Add Link
+                </button>
+              </div>
             </div>
             
             <div className="border-2 border-dashed border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-all rounded-xl p-8 text-center cursor-pointer group">
