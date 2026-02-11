@@ -15,6 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
   const academicItems = [
     { id: View.PORTFOLIO, label: 'Unified Portfolio', icon: 'collections_bookmark' },
     { id: View.SUBMISSION, label: 'Assessments', icon: 'assignment', badge: 3 },
+    { id: View.PEER_REVIEW, label: 'Peer Review', icon: 'groups' },
   ];
 
   const extracurricularItems = [

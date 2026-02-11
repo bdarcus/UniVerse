@@ -30,9 +30,14 @@
 
 ## Phase 3: Social Pedagogy & Institutional Analytics
 **Objective:** Show how the system scales and builds community.
-*   **Feature: Peer Review Mockup.** Show how students can provide structured feedback to each other.
-*   **Feature: Department Dashboard.** A view for Deans to see aggregate competency growth (e.g., "80% of Sophomores are meeting the Communication standard").
+*   **Feature: Peer Review Gallery.** Show how students can provide structured feedback to each other.
+    *   *Status:* **Complete.** Implemented `PeerReview` gallery with social feedback loops and gamification (Critic Badge).
+*   **Feature: Institutional Analytics.** A view for Deans to see aggregate competency growth (e.g., "80% of Sophomores are meeting the Communication standard").
+    *   *Status:* **In Progress.**
+*   **Feature: Shareable Portfolios.** Implement a "Public Profile" simulation for external stakeholders/employers.
+    *   *Status:* **Next Up.**
 *   **Research Integration:** *Social Constructivism* (Vygotsky). Learning happens in a social context.
+    *   *Status:* **Integrated.** Peer review loops demonstrate collaborative learning.
 
 ## Phase 4: Pilot Readiness
 **Objective:** Prepare for a closed beta or high-stakes demo.

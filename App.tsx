@@ -12,6 +12,7 @@ import Settings from './pages/Settings';
 import CareerCoach from './pages/CareerCoach';
 import ArtifactDetail from './pages/ArtifactDetail';
 import BadgeDetail from './pages/BadgeDetail';
+import PeerReview from './pages/PeerReview';
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>(View.DASHBOARD);
@@ -43,6 +44,8 @@ const App: React.FC = () => {
         return <ArtifactDetail id={selectedItemId} onViewChange={setActiveView} />;
       case View.BADGE_DETAIL:
         return <BadgeDetail id={selectedItemId} onViewChange={setActiveView} />;
+      case View.PEER_REVIEW:
+        return <PeerReview onViewChange={setActiveView} onNavigateDetail={navigateToDetail} />;
       default:
         return (
           <div className="p-8 text-center">

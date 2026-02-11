@@ -8,7 +8,8 @@ export enum View {
   SETTINGS = 'settings',
   COACH = 'coach',
   ARTIFACT_DETAIL = 'artifact_detail',
-  BADGE_DETAIL = 'badge_detail'
+  BADGE_DETAIL = 'badge_detail',
+  PEER_REVIEW = 'peer_review'
 }
 
 export interface PortfolioItem {

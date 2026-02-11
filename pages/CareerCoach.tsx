@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { View } from '../types';
-import { portfolioItems } from '../data';
+import { usePortfolioItems } from '../store';
 
 interface CareerCoachProps {
   onViewChange?: (view: View) => void;
@@ -13,12 +13,19 @@ const CareerCoach: React.FC<CareerCoachProps> = ({ onViewChange }) => {
   const [response, setResponse] = useState<string | null>(null);
   const [groundingChunks, setGroundingChunks] = useState<any[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const portfolioItems = usePortfolioItems();
 
   const studentProfile = {
     major: "Computer Science",
     year: "Senior",
     badged: ["Global Leadership", "Innovation", "Civic Engagement"],
-    artifacts: portfolioItems.map(item => `${item.title} (${item.category}): ${item.description}`)
+    artifacts: portfolioItems.map(item => ({
+      title: item.title,
+      category: item.category,
+      skills: item.skills || [],
+      grade: item.grade,
+      status: item.status
+    }))
   };
 
   const analyzeCareer = async () => {
@@ -32,14 +39,28 @@ const CareerCoach: React.FC<CareerCoachProps> = ({ onViewChange }) => {
 
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const artifactsContext = studentProfile.artifacts
+        .map(a => `- ${a.title} (${a.category}): Skills: ${a.skills.join(', ')} | Grade: ${a.grade || 'N/A'} | Status: ${a.status}`)
+        .join('\n');
+
+      const prompt = `You are an expert Career Coach. Analyze this student profile:
+        Student: ${studentProfile.year} ${studentProfile.major}
+        Earned Badges: ${studentProfile.badged.join(', ')}
+        
+        Verified Artifacts & Competencies:
+        ${artifactsContext}
+        
+        User Request: ${query || "Based on my skills and projects, what are 3 career paths I should consider and find real internship listings for them."}
+        
+        Instructions:
+        1. Connect specific skills from their artifacts to professional roles.
+        2. Reference their highest graded (A or B+) work as key selling points.
+        3. Use Google Search to find current, real-world internships matching these competencies.
+        4. Be specific and encouraging.`;
+
       const res = await ai.models.generateContent({
         model: 'gemini-3-pro-preview',
-        contents: `Student is a ${studentProfile.year} ${studentProfile.major} student. 
-        Earned Badges: ${studentProfile.badged.join(', ')}. 
-        Portfolio Projects:
-        ${studentProfile.artifacts.join('\n')}
-        
-        Request: ${query || "Based on my skills and projects, what are 3 career paths I should consider and find real internship listings for them."}`,
+        contents: prompt,
         config: {
           tools: [{ googleSearch: {} }]
         }
@@ -153,16 +174,21 @@ const CareerCoach: React.FC<CareerCoachProps> = ({ onViewChange }) => {
           <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Your Skill Profile</h2>
             <div className="space-y-4">
-              <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-100 dark:border-purple-800">
-                <p className="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase mb-1">Top Alignment</p>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">{portfolioItems[0]?.title || "Generalist"}</p>
-                <p className="text-xs text-slate-500 mt-1">Matched via {portfolioItems[0]?.category} Artifact</p>
-              </div>
-              <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700">
-                <p className="text-xs font-bold text-slate-400 uppercase mb-1">Secondary Path</p>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">{portfolioItems[1]?.title || "Professionalism"}</p>
-                <p className="text-xs text-slate-500 mt-1">Matched via {portfolioItems[1]?.category} Artifact</p>
-              </div>
+              {portfolioItems.filter(i => i.status === 'GRADED').slice(0, 2).map((item, idx) => (
+                <div key={item.id} className={`p-3 rounded-xl border ${idx === 0 ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-100 dark:border-purple-800' : 'bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700'}`}>
+                  <p className={`text-xs font-bold uppercase mb-1 ${idx === 0 ? 'text-purple-600 dark:text-purple-400' : 'text-slate-400'}`}>
+                    {idx === 0 ? 'Top Alignment' : 'Secondary Path'}
+                  </p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white">{item.title}</p>
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {item.skills?.slice(0, 3).map(skill => (
+                      <span key={skill} className="px-1.5 py-0.5 bg-white dark:bg-slate-700 text-[9px] font-bold text-slate-500 rounded border border-slate-200 dark:border-slate-600">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
             
             <div className="mt-8">
