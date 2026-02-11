@@ -24,7 +24,7 @@ Harness the power of **Google Gemini 3 Pro**. Our AI Career Coach doesn't just g
 ### 1. The Student Command Center
 The Dashboard offers a high-fidelity overview of your academic standing, passport progress, and upcoming milestones. It’s designed for clarity, helping you stay ahead of deadlines while tracking your path to the "Gold Tier" scholar status.
 
-![UniVerse Dashboard](./screenshots/dashboard.png)
+![UniVerse Dashboard](resources/img/dash.png)
 *Modern, card-based interface providing real-time stats and artifact previews.*
 
 ### 2. Deep-Link Achievement Detail
@@ -33,11 +33,14 @@ Achievements aren't just icons. Every badge and artifact has a dedicated detail 
 ![Portfolio & Badge Detail](./screenshots/portfolio.png)
 *Clean, document-centric views that showcase the depth of student work.*
 
-### 3. AI-Driven Career Analysis
-Interact with a career coach that knows you better than any generic LLM. By grounding its responses in your actual achievements, the coach provides hyper-personalized paths and live internship searches.
+### 3. Integrated Assessment
+Assessement is integrated from the start, for students and faculty alike.
 
-![AI Coach Consultation](./screenshots/coach.png)
-*Intelligent chat interface powered by Gemini, grounded in real student data.*
+![Student assessement view](resources/img/student-assess.png)
+*A student assssement view.*
+
+![Faculty assessement view](resources/img/faculty-assess.png)
+*A faculty assssement view.*
 
 ---
 
