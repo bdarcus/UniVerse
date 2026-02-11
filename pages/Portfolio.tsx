@@ -8,11 +8,11 @@ interface PortfolioProps {
 }
 
 const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail }) => {
-  const [activeTab, setActiveTab] = useState<'passport' | 'artifacts'>('passport');
-  const [showShareModal, setShowShareModal] = useState(false);
-  const portfolioItems = usePortfolioItems();
   const { context } = useAppContext();
   const isPublic = context === ViewContext.PUBLIC;
+  const [activeTab, setActiveTab] = useState<'artifacts' | 'passport'>('artifacts');
+  const portfolioItems = usePortfolioItems();
+  const [showShareModal, setShowShareModal] = useState(false);
 
   return (
     <div className="animate-in slide-in-from-bottom-4 duration-500 pb-20">
@@ -24,7 +24,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
             </div>
             <div className="text-left">
               <p className="text-sm font-bold text-amber-900 dark:text-amber-200">Public Showcase View</p>
-              <p className="text-xs text-amber-700 dark:text-amber-400">This is what employers see. Internal grades, draft artifacts, and private reflections are hidden.</p>
+              <p className="text-xs text-amber-700 dark:text-amber-400">This is what employers see. Internal assessment levels, draft artifacts, and private reflections are hidden.</p>
             </div>
           </div>
         )}
@@ -65,19 +65,6 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
         {/* Tab System */}
         <div className="flex border-b border-slate-200 dark:border-slate-800">
           <button 
-            onClick={() => setActiveTab('passport')}
-            className={`px-8 py-4 text-sm font-bold transition-all relative ${
-              activeTab === 'passport' 
-                ? 'text-primary' 
-                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-            }`}
-          >
-            {isPublic ? 'Verified Badges' : 'Passport (Badges)'}
-            {activeTab === 'passport' && (
-              <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
-            )}
-          </button>
-          <button 
             onClick={() => setActiveTab('artifacts')}
             className={`px-8 py-4 text-sm font-bold transition-all relative ${
               activeTab === 'artifacts' 
@@ -85,14 +72,55 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
-            {isPublic ? 'Featured Projects' : 'Repository (Workspace)'}
+            {isPublic ? 'Featured Projects' : 'Project Repository'}
             {activeTab === 'artifacts' && (
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
+            )}
+          </button>
+          <button 
+            onClick={() => setActiveTab('passport')}
+            className={`px-8 py-4 text-sm font-bold transition-all relative ${
+              activeTab === 'passport' 
+                ? 'text-primary' 
+                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+            }`}
+          >
+            {isPublic ? 'Verified Credentials' : 'Passport (Badges)'}
+            {activeTab === 'passport' && (
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
             )}
           </button>
         </div>
 
-        {activeTab === 'passport' ? (
+        {activeTab === 'artifacts' ? (
+          <div className="space-y-8 animate-in fade-in duration-300 text-left">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {portfolioItems
+                .filter(item => !isPublic || item.status === 'ASSESSED' || item.status === 'PUBLIC')
+                .map(item => (
+                <ArtifactProjectCard 
+                  key={item.id}
+                  title={item.title} 
+                  category={item.category} 
+                  status={item.status} 
+                  assessmentLevel={!isPublic ? item.assessmentLevel : undefined} 
+                  imageUrl={item.imageUrl}
+                  skills={item.skills}
+                  onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, item.id)}
+                />
+              ))}
+              {!isPublic && (
+                <div 
+                  onClick={() => onViewChange(View.SUBMISSION)}
+                  className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer h-full min-h-[250px]"
+                >
+                  <span className="material-icons text-3xl text-slate-400 group-hover:text-primary mb-2">add_circle_outline</span>
+                  <p className="text-sm font-bold text-slate-600 dark:text-slate-400">Add Project Artifact</p>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
           <div className="space-y-8 animate-in fade-in duration-300 text-left">
             {!isPublic && (
               <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -115,20 +143,18 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 footer="Oct 24, 2023"
                 onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-crw")}
               />
-              {(!isPublic || false) && ( // Example of hiding in-progress for public
-                <>
-                  <AchievementCard 
-                    icon="volunteer_activism" 
-                    title="Civic Engagement Leader" 
-                    category="Community Service" 
-                    description="Lead at least 3 community service events and log 20+ hours of volunteer work."
-                    progress={75}
-                    progressText="15 / 20 Hours"
-                    footer="Last updated 2d ago"
-                    actionLabel={isPublic ? undefined : "Log Hours"}
-                    onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cel")}
-                  />
-                </>
+              {(!isPublic) && ( 
+                <AchievementCard 
+                  icon="volunteer_activism" 
+                  title="Civic Engagement Leader" 
+                  category="Community Service" 
+                  description="Lead at least 3 community service events and log 20+ hours of volunteer work."
+                  progress={75}
+                  progressText="15 / 20 Hours"
+                  footer="Last updated 2d ago"
+                  actionLabel="Log Hours"
+                  onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cel")}
+                />
               )}
               <AchievementCard 
                 icon="groups" 
@@ -141,34 +167,6 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 actionLabel={isPublic ? undefined : "Details"}
                 onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cot")}
               />
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-8 animate-in fade-in duration-300 text-left">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {portfolioItems
-                .filter(item => !isPublic || item.status === 'GRADED' || item.status === 'PUBLIC')
-                .map(item => (
-                <ArtifactProjectCard 
-                  key={item.id}
-                  title={item.title} 
-                  category={item.category} 
-                  status={item.status} 
-                  assessmentLevel={!isPublic ? item.assessmentLevel : undefined} // Hide assessment in public view
-                  imageUrl={item.imageUrl}
-                  skills={item.skills}
-                  onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, item.id)}
-                />
-              ))}
-              {!isPublic && (
-                <div 
-                  onClick={() => onViewChange(View.SUBMISSION)}
-                  className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer h-full min-h-[250px]"
-                >
-                  <span className="material-icons text-3xl text-slate-400 group-hover:text-primary mb-2">add_circle_outline</span>
-                  <p className="text-sm font-bold text-slate-600 dark:text-slate-400">Add Project Artifact</p>
-                </div>
-              )}
             </div>
           </div>
         )}

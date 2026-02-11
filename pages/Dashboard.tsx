@@ -70,7 +70,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <button className="text-primary font-bold hover:underline">Grade</button>
+                        <button className="text-primary font-bold hover:underline">Assess</button>
                       </td>
                     </tr>
                   ))}

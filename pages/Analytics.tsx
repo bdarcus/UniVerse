@@ -55,21 +55,22 @@ const Analytics: React.FC<AnalyticsProps> = () => {
 
         {/* Student Success Quartiles */}
         <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm text-left">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Engagement vs. Achievement</h3>
-          <div className="h-64 flex items-end gap-4 justify-around px-4">
-            <Bar height="h-[60%]" label="Q1" color="bg-slate-200" />
-            <Bar height="h-[85%]" label="Q2" color="bg-slate-300" />
-            <Bar height="h-[95%]" label="Q3" color="bg-primary" />
-            <Bar height="h-[40%]" label="Q4" color="bg-slate-200" />
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Engagement vs. Achievement</h3>
+          <p className="text-xs text-slate-500 mb-8">Correlation between co-curricular activity and assessment mastery.</p>
+          <div className="h-64 flex items-end gap-4 justify-around px-4 border-b border-l border-slate-100 dark:border-slate-800 pb-2 ml-4">
+            <Bar height="60%" label="Low Eng." color="bg-slate-200 dark:bg-slate-800" />
+            <Bar height="82%" label="Med Eng." color="bg-primary/40" />
+            <Bar height="95%" label="High Eng." color="bg-primary" />
+            <Bar height="40%" label="At Risk" color="bg-rose-400/40" />
           </div>
           <div className="mt-8 space-y-4">
             <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-500">Highest Engagement:</span>
-              <span className="font-bold text-slate-900 dark:text-white uppercase text-xs">Innovation Badge Candidates</span>
+              <span className="text-slate-500">Highest Mastery:</span>
+              <span className="font-bold text-slate-900 dark:text-white uppercase text-[10px] tracking-wider">High Engagement Cohort</span>
             </div>
             <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-500">At-Risk Indicators:</span>
-              <span className="font-bold text-rose-500 uppercase text-xs">Low Reflection Frequency (8%)</span>
+              <span className="text-slate-500">Key Takeaway:</span>
+              <span className="font-bold text-emerald-600 dark:text-emerald-400 uppercase text-[10px] tracking-wider">Co-curricular activity correlates +24% mastery</span>
             </div>
           </div>
         </div>
@@ -103,9 +104,16 @@ const ProgressBar = ({ label, progress, color }: any) => (
 );
 
 const Bar = ({ height, label, color }: any) => (
-  <div className="flex flex-col items-center gap-2 w-full">
-    <div className={`w-full rounded-t-lg transition-all duration-1000 ${color} ${height}`}></div>
-    <span className="text-[10px] font-bold text-slate-400">{label}</span>
+  <div className="flex flex-col items-center gap-2 w-full h-full justify-end">
+    <div 
+      className={`w-full rounded-t-lg transition-all duration-1000 ${color} shadow-sm group relative`} 
+      style={{ height: height }}
+    >
+      <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+        {height}
+      </div>
+    </div>
+    <span className="text-[9px] font-bold text-slate-400 uppercase truncate w-full text-center">{label}</span>
   </div>
 );
 
