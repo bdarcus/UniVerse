@@ -106,7 +106,7 @@ export const portfolioItems: PortfolioItem[] = [
     credits: "3.0",
     faculty: "Prof. Marcus Chen",
     feedback: "The data processing is solid, but the color contrast in the main visualization could be improved for accessibility.",
-    imageUrl: "https://picsum.photos/seed/viz/800/600",
+    imageUrl: "https://picsum.photos/id/201/800/600",
     skills: ["Data Visualization", "JavaScript", "D3.js"]
   },
   {
