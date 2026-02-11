@@ -1,5 +1,7 @@
 # Architecture Roadmap: From Prototype to Production
 
+**Note:** As this a prototype to test ideas, this only is a hypothetical plan for what it might take to turn this into a production ready system.
+
 **Goal:** Transition the UniVerse prototype (Vite/React SPA) into a robust, scalable, and maintainable production system using Go microservices and Next.js.
 
 ---
