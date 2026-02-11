@@ -43,6 +43,17 @@ class PortfolioStore {
     this.notify();
   }
 
+  toggleItemPublic(id: string) {
+    this.items = this.items.map(item => {
+      if (item.id === id) {
+        const newStatus = item.status === 'PUBLIC' ? 'ASSESSED' : 'PUBLIC';
+        return { ...item, status: newStatus };
+      }
+      return item;
+    });
+    this.notify();
+  }
+
   subscribe(listener: () => void) {
     this.listeners.push(listener);
     return () => {

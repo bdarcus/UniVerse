@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, ViewContext } from '../types';
-import { usePortfolioItems, useAppContext } from '../store';
+import { usePortfolioItems, useAppContext, portfolioStore } from '../store';
 
 interface PortfolioProps {
   onViewChange: (view: View) => void;
@@ -9,7 +9,7 @@ interface PortfolioProps {
 
 const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail }) => {
   const { context } = useAppContext();
-  const isPublic = context === ViewContext.PUBLIC;
+  const isPublicViewContext = context === ViewContext.PUBLIC;
   const [activeTab, setActiveTab] = useState<'artifacts' | 'passport'>('artifacts');
   const portfolioItems = usePortfolioItems();
   const [showShareModal, setShowShareModal] = useState(false);
@@ -17,7 +17,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
   return (
     <div className="animate-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
-        {isPublic && (
+        {isPublicViewContext && (
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-4 rounded-2xl flex items-center gap-4 animate-in fade-in duration-500">
             <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800 flex items-center justify-center text-amber-600 dark:text-amber-400">
               <span className="material-icons">visibility</span>
@@ -34,18 +34,18 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
             <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
               <span className="hover:text-primary cursor-pointer" onClick={() => onViewChange(View.DASHBOARD)}>Home</span>
               <span className="material-icons text-xs">chevron_right</span>
-              <span className="text-primary font-medium">{isPublic ? 'Public Showcase' : 'Portfolio'}</span>
+              <span className="text-primary font-medium">{isPublicViewContext ? 'Public Showcase' : 'Portfolio'}</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-              {isPublic ? "Alex Morgan's Showcase" : 'Unified Portfolio'}
+              {isPublicViewContext ? "Alex Morgan's Showcase" : 'Unified Portfolio'}
             </h1>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl text-left">
-              {isPublic 
+              {isPublicViewContext 
                 ? 'A curated selection of my professional artifacts, competencies, and verified achievements.'
                 : 'Manage your academic repository and curate professional showcases that demonstrate your learning journey.'}
             </p>
           </div>
-          {!isPublic && (
+          {!isPublicViewContext && (
             <div className="flex items-center gap-3">
               <button className="inline-flex items-center px-4 py-2.5 border border-slate-300 dark:border-slate-600 shadow-sm text-sm font-medium rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                 <span className="material-icons text-base mr-2">ios_share</span>
@@ -72,7 +72,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
-            {isPublic ? 'Featured Projects' : 'Project Repository'}
+            {isPublicViewContext ? 'Featured Projects' : 'Project Repository'}
             {activeTab === 'artifacts' && (
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
             )}
@@ -85,7 +85,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
-            {isPublic ? 'Verified Credentials' : 'Passport (Badges)'}
+            {isPublicViewContext ? 'Verified Credentials' : 'Passport (Badges)'}
             {activeTab === 'passport' && (
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
             )}
@@ -96,20 +96,22 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
           <div className="space-y-8 animate-in fade-in duration-300 text-left">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {portfolioItems
-                .filter(item => !isPublic || item.status === 'ASSESSED' || item.status === 'PUBLIC')
+                .filter(item => !isPublicViewContext || item.status === 'PUBLIC')
                 .map(item => (
                 <ArtifactProjectCard 
                   key={item.id}
+                  id={item.id}
                   title={item.title} 
                   category={item.category} 
                   status={item.status} 
-                  assessmentLevel={!isPublic ? item.assessmentLevel : undefined} 
+                  assessmentLevel={!isPublicViewContext ? item.assessmentLevel : undefined} 
                   imageUrl={item.imageUrl}
                   skills={item.skills}
+                  isPublicViewContext={isPublicViewContext}
                   onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, item.id)}
                 />
               ))}
-              {!isPublic && (
+              {!isPublicViewContext && (
                 <div 
                   onClick={() => onViewChange(View.SUBMISSION)}
                   className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer h-full min-h-[250px]"
@@ -122,7 +124,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
           </div>
         ) : (
           <div className="space-y-8 animate-in fade-in duration-300 text-left">
-            {!isPublic && (
+            {!isPublicViewContext && (
               <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatMiniCard icon="military_tech" label="Badges Earned" value="12" color="blue" />
                 <StatMiniCard icon="schedule" label="Hours Logged" value="48.5" color="green" />
@@ -143,7 +145,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 footer="Oct 24, 2023"
                 onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-crw")}
               />
-              {(!isPublic) && ( 
+              {(!isPublicViewContext) && ( 
                 <AchievementCard 
                   icon="volunteer_activism" 
                   title="Civic Engagement Leader" 
@@ -164,7 +166,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 progress={25}
                 progressText="1 / 4 Months"
                 footer="Ongoing"
-                actionLabel={isPublic ? undefined : "Details"}
+                actionLabel={isPublicViewContext ? undefined : "Details"}
                 onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cot")}
               />
             </div>
@@ -187,7 +189,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
               
               <div className="space-y-3 text-left">
                 <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest px-1">Selected Artifacts</p>
-                {portfolioItems.slice(0, 2).map(item => (
+                {portfolioItems.filter(i => i.status === 'PUBLIC').slice(0, 3).map(item => (
                   <div key={item.id} className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
                     <img src={item.imageUrl} className="w-8 h-8 rounded object-cover" alt="" />
                     <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex-1 truncate">{item.title}</span>
@@ -229,54 +231,72 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
   );
 };
 
-const ArtifactProjectCard = ({ title, category, status, assessmentLevel, imageUrl, skills, onClick }: any) => (
-  <div onClick={onClick} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full cursor-pointer text-left">
-    <div className="h-44 relative overflow-hidden">
-      <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-      <div className="absolute bottom-4 left-4">
-        <span className="text-white font-bold text-lg">{title}</span>
-      </div>
-      {assessmentLevel && (
-        <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-3 py-1 rounded-lg shadow-lg border border-primary/20">
-          <span className="text-primary font-black text-[10px] uppercase tracking-widest">{assessmentLevel}</span>
+const ArtifactProjectCard = ({ id, title, category, status, assessmentLevel, imageUrl, skills, onClick, isPublicViewContext }: any) => {
+  const isItemPublic = status === 'PUBLIC';
+  
+  return (
+    <div onClick={onClick} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full cursor-pointer text-left relative">
+      <div className="h-44 relative overflow-hidden">
+        <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div className="absolute bottom-4 left-4 right-4">
+          <span className="text-white font-bold text-lg line-clamp-1">{title}</span>
         </div>
-      )}
-    </div>
-    <div className="p-4 flex-1 flex flex-col">
-      <div className="flex items-center gap-2 mb-3">
-        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-          category === 'Engineering' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' : 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'
-        }`}>
-          {category}
-        </span>
-        <span className="text-xs text-slate-400">•</span>
-        <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-          status === 'ASSESSED' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 
-          status === 'PUBLIC' ? 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300' :
-          'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
-        }`}>
-          {status}
-        </span>
+        
+        {assessmentLevel && (
+          <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-3 py-1 rounded-lg shadow-lg border border-primary/20">
+            <span className="text-primary font-black text-[10px] uppercase tracking-widest">{assessmentLevel}</span>
+          </div>
+        )}
+
+        {/* Public Status Indicator & Toggle (Private View Only) */}
+        {!isPublicViewContext && (
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              portfolioStore.toggleItemPublic(id);
+            }}
+            className={`absolute top-4 right-4 p-2 rounded-full backdrop-blur-md transition-all shadow-lg border ${
+              isItemPublic 
+                ? 'bg-emerald-500/90 text-white border-emerald-400' 
+                : 'bg-white/80 text-slate-400 border-slate-200 hover:text-primary hover:bg-white'
+            }`}
+            title={isItemPublic ? "Remove from Showcase" : "Add to Showcase"}
+          >
+            <span className="material-icons text-lg">{isItemPublic ? 'public' : 'public_off'}</span>
+          </button>
+        )}
       </div>
-      
-      {skills && skills.length > 0 && (
-        <div className="flex flex-wrap gap-1 mt-auto">
-          {skills.slice(0, 3).map((skill: string) => (
-            <span key={skill} className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] rounded border border-slate-200 dark:border-slate-700">
-              {skill}
-            </span>
-          ))}
-          {skills.length > 3 && (
-            <span className="px-1.5 py-0.5 bg-slate-50 dark:bg-slate-800/50 text-slate-400 text-[10px] rounded">
-              +{skills.length - 3}
-            </span>
-          )}
+      <div className="p-4 flex-1 flex flex-col">
+        <div className="flex items-center gap-2 mb-3">
+          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+            category === 'Engineering' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' : 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'
+          }`}>
+            {category}
+          </span>
+          <span className="text-xs text-slate-400">•</span>
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+            status === 'ASSESSED' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 
+            status === 'PUBLIC' ? 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300' :
+            'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+          }`}>
+            {status}
+          </span>
         </div>
-      )}
+        
+        {skills && skills.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-auto">
+            {skills.slice(0, 3).map((skill: string) => (
+              <span key={skill} className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] rounded border border-slate-200 dark:border-slate-700">
+                {skill}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const StatMiniCard = ({ icon, label, value, color }: any) => {
   const colors: any = {
