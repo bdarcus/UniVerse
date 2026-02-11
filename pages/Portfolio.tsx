@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from '../types';
-import { portfolioItems } from '../data';
+import { usePortfolioItems } from '../store';
 
 interface PortfolioProps {
   onViewChange: (view: View) => void;
@@ -9,6 +9,7 @@ interface PortfolioProps {
 
 const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail }) => {
   const [activeTab, setActiveTab] = useState<'passport' | 'artifacts'>('passport');
+  const portfolioItems = usePortfolioItems();
 
   return (
     <div className="animate-in slide-in-from-bottom-4 duration-500 pb-20">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from '../types';
 import { assignments } from '../data';
+import { usePortfolioItems } from '../store';
 
 interface DashboardProps {
   onViewChange: (view: View) => void;
@@ -8,6 +9,8 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail }) => {
+  const portfolioItems = usePortfolioItems();
+  const recentArtifacts = portfolioItems.slice(0, 2);
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
       {/* Stats Cards */}
@@ -62,24 +65,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <PortfolioCard 
-              title="Capstone: Renewable Grid" 
-              category="Engineering" 
-              date="Oct 24, 2023"
-              description="A comprehensive study on integrating solar microgrids into urban infrastructure."
-              status="PUBLIC"
-              imageUrl="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800"
-              onClick={() => onNavigateDetail(View.ASSESSMENT, "art-1")}
-            />
-            <PortfolioCard 
-              title="Visualization Techniques" 
-              category="Data Science" 
-              date="Nov 02, 2023"
-              description="Exploration of D3.js libraries for presenting complex sociological datasets."
-              status="DRAFT"
-              imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
-              onClick={() => onNavigateDetail(View.ASSESSMENT, "art-2")}
-            />
+            {recentArtifacts.map(item => (
+              <PortfolioCard 
+                key={item.id}
+                title={item.title} 
+                category={item.category} 
+                date={item.date}
+                description={item.description}
+                status={item.status}
+                imageUrl={item.imageUrl}
+                onClick={() => onNavigateDetail(View.ASSESSMENT, item.id)}
+              />
+            ))}
           </div>
           
           <button 

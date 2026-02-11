@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { View } from '../types';
 import { GoogleGenAI } from "@google/genai";
 
-import { portfolioItems } from '../data';
+import { portfolioStore } from '../store';
 
 interface AssessmentProps {
   id?: string | null;
@@ -10,7 +10,7 @@ interface AssessmentProps {
 }
 
 const Assessment: React.FC<AssessmentProps> = ({ id, onViewChange }) => {
-  const artifact = portfolioItems.find(a => a.id === id) || portfolioItems[0];
+  const artifact = portfolioStore.getItem(id);
   
   const [criticalThinkingScore, setCriticalThinkingScore] = useState<number>(8); // Default to Proficient
   const [communicationLevel, setCommunicationLevel] = useState<string>('Mastering');
@@ -315,6 +315,11 @@ const Assessment: React.FC<AssessmentProps> = ({ id, onViewChange }) => {
             </button>
             <button 
               onClick={() => {
+                portfolioStore.updateItem(artifact.id, {
+                  grade: totalScore >= 90 ? 'A' : totalScore >= 80 ? 'B' : 'C',
+                  feedback: feedback,
+                  status: 'GRADED'
+                });
                 alert(`Grade of ${totalScore}/100 submitted for Alex Morgan.`);
                 onViewChange?.(View.DASHBOARD);
               }}
