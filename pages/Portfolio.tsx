@@ -128,14 +128,14 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 category="Data Science" 
                 status="GRADED" 
                 grade="B+"
-                imageUrl="https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=800"
+                imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
                 onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-2")}
               />
               <ArtifactProjectCard 
                 title="Ethics in AI" 
                 category="Philosophy" 
                 status="PENDING" 
-                imageUrl="https://images.unsplash.com/photo-1675557009875-436f2978a6fa?auto=format&fit=crop&q=80&w=800"
+                imageUrl="https://images.unsplash.com/photo-1620712943543-bcc4628c6720?auto=format&fit=crop&q=80&w=800"
                 onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-3")}
               />
               <div 
@@ -154,11 +154,11 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
 };
 
 const ArtifactProjectCard = ({ title, category, status, grade, imageUrl, onClick }: any) => (
-  <div onClick={onClick} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full cursor-pointer">
+  <div onClick={onClick} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full cursor-pointer text-left">
     <div className="h-44 relative overflow-hidden">
       <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-      <div className="absolute bottom-4 left-4 text-left">
+      <div className="absolute bottom-4 left-4">
         <span className="text-white font-bold text-lg">{title}</span>
       </div>
       {grade && (
@@ -187,7 +187,7 @@ const StatMiniCard = ({ icon, label, value, color }: any) => {
     orange: 'bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400'
   };
   return (
-    <div className="bg-white dark:bg-[#151b2b] p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+    <div className="bg-white dark:bg-[#151b2b] p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 flex items-center gap-4 text-left">
       <div className={`p-3 rounded-lg ${colors[color]}`}>
         <span className="material-icons text-2xl">{icon}</span>
       </div>
@@ -208,7 +208,7 @@ const AchievementCard = ({ icon, title, category, description, progress, status,
         </div>
       </div>
     )}
-    <div className="p-6 flex-grow">
+    <div className="p-6 flex-grow text-left">
       <div className="flex items-start justify-between mb-4">
         <div className={`w-14 h-14 rounded-full flex items-center justify-center border ${
           progress === 100 ? 'bg-blue-50 border-blue-100 text-primary dark:bg-blue-900/40 dark:border-slate-700' : 
@@ -221,8 +221,8 @@ const AchievementCard = ({ icon, title, category, description, progress, status,
           {category}
         </span>
       </div>
-      <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors text-left">{title}</h3>
-      <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2 text-left">{description}</p>
+      <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{title}</h3>
+      <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">{description}</p>
       <div className="space-y-2">
         <div className="flex justify-between text-xs font-medium">
           <span className="text-slate-700 dark:text-slate-300">{progressText || 'Progress'}</span>
