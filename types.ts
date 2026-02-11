@@ -31,8 +31,8 @@ export interface PortfolioItem {
   description: string; // The "What" (Artifact description)
   reflection?: string;  // The "Why" (Metacognitive narrative)
   imageUrl: string;
-  status: 'PUBLIC' | 'DRAFT' | 'GRADED';
-  grade?: string;
+  status: 'PUBLIC' | 'DRAFT' | 'ASSESSED';
+  assessmentLevel?: string; // e.g., 'Exemplary', 'Proficient', 'Developing'
   feedback?: string;
   faculty?: string;
   credits?: string;

@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { View } from '../types';
-import { portfolioItems } from '../data';
+import { View, ViewContext } from '../types';
+import { portfolioItems, usePortfolioItems, useAppContext } from '../store';
 
 interface ArtifactDetailProps {
   id: string | null;
@@ -9,7 +9,10 @@ interface ArtifactDetailProps {
 }
 
 const ArtifactDetail: React.FC<ArtifactDetailProps> = ({ id, onViewChange }) => {
+  const portfolioItems = usePortfolioItems();
   const artifact = portfolioItems.find(item => item.id === id) || portfolioItems[0];
+  const { context } = useAppContext();
+  const isPublic = context === ViewContext.PUBLIC;
 
   if (!artifact) {
     return (
@@ -138,58 +141,63 @@ const ArtifactDetail: React.FC<ArtifactDetailProps> = ({ id, onViewChange }) => 
               </div>
             )}
 
-            <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                  <span className="material-icons">rate_review</span>
+            )}
+
+            {!isPublic && (
+              <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                    <span className="material-icons">rate_review</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">Faculty Feedback</h3>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Faculty Feedback</h3>
-              </div>
-              {artifact.feedback ? (
-                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700">
-                  <p className="text-slate-600 dark:text-slate-400 italic leading-relaxed mb-4">
-                    "{artifact.feedback}"
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <img src={`https://picsum.photos/seed/${artifact.faculty}/40/40`} alt="Faculty" className="w-8 h-8 rounded-full" />
-                    <div>
-                      <p className="text-xs font-bold text-slate-900 dark:text-white">{artifact.faculty}</p>
-                      <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Faculty Member</p>
+                {artifact.feedback ? (
+                  <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-slate-100 dark:border-slate-700">
+                    <p className="text-slate-600 dark:text-slate-400 italic leading-relaxed mb-4">
+                      "{artifact.feedback}"
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <img src={`https://picsum.photos/seed/${artifact.faculty}/40/40`} alt="Faculty" className="w-8 h-8 rounded-full" />
+                      <div>
+                        <p className="text-xs font-bold text-slate-900 dark:text-white">{artifact.faculty}</p>
+                        <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Faculty Member</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-dashed border-slate-200 dark:border-slate-700 text-center">
-                   <p className="text-sm text-slate-400 italic">This artifact is awaiting faculty review.</p>
-                </div>
-              )}
-            </div>
+                ) : (
+                  <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 border border-dashed border-slate-200 dark:border-slate-700 text-center">
+                    <p className="text-sm text-slate-400 italic">This artifact is awaiting faculty review.</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Sidebar Metadata */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Assessment Record</h3>
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-slate-500 dark:text-slate-400">Final Grade</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl font-black text-primary">{artifact.grade || '—'}</span>
-                    {artifact.grade && <span className="text-xs font-bold text-slate-400">/ 4.0</span>}
+            {!isPublic && (
+              <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Assessment Record</h3>
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-slate-500 dark:text-slate-400">Assessment Level</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-black text-primary uppercase tracking-tighter">{artifact.assessmentLevel || 'Pending'}</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-slate-500 dark:text-slate-400">Credits Awarded</span>
+                    <span className="text-sm font-bold text-slate-900 dark:text-white">{artifact.credits ? `${artifact.credits} Credits` : 'Pending'}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-slate-500 dark:text-slate-400">Privacy Setting</span>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded">
+                      <span className="material-icons text-[14px]">public</span> Public
+                    </span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-slate-500 dark:text-slate-400">Credits Awarded</span>
-                  <span className="text-sm font-bold text-slate-900 dark:text-white">{artifact.credits ? `${artifact.credits} Credits` : 'Pending'}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-slate-500 dark:text-slate-400">Privacy Setting</span>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded">
-                    <span className="material-icons text-[14px]">public</span> Public
-                  </span>
-                </div>
               </div>
-            </div>
+            )}
 
             <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Related Skills</h3>
@@ -202,18 +210,20 @@ const ArtifactDetail: React.FC<ArtifactDetailProps> = ({ id, onViewChange }) => 
               </div>
             </div>
             
-            <button 
-              onClick={() => onViewChange(View.COACH)}
-              className="w-full group bg-slate-900 text-white p-6 rounded-2xl relative overflow-hidden transition-all hover:scale-[1.02]"
-            >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:rotate-12 transition-transform">
-                <span className="material-icons text-5xl">auto_awesome</span>
-              </div>
-              <p className="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">Coach Suggestion</p>
-              <p className="text-sm font-medium leading-relaxed">
-                "Alex, this artifact is perfect for the <strong>Tesla Sustainability Internship</strong>. Shall I help you write a tailored cover letter based on this?"
-              </p>
-            </button>
+            {!isPublic && (
+              <button 
+                onClick={() => onViewChange(View.COACH)}
+                className="w-full group bg-slate-900 text-white p-6 rounded-2xl relative overflow-hidden transition-all hover:scale-[1.02]"
+              >
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:rotate-12 transition-transform">
+                  <span className="material-icons text-5xl">auto_awesome</span>
+                </div>
+                <p className="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">Coach Suggestion</p>
+                <p className="text-sm font-medium leading-relaxed">
+                  "Alex, this artifact is perfect for the <strong>Tesla Sustainability Internship</strong>. Shall I help you write a tailored cover letter based on this?"
+                </p>
+              </button>
+            )}
           </div>
         </div>
       </div>

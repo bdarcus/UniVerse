@@ -110,9 +110,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
           progress={72} 
         />
         <StatCard 
-          label="Current GPA" 
-          value="3.8" 
-          subText="+0.2 from last semester" 
+          label="Competency Mastery" 
+          value="82%" 
+          subText="Growth: +4% this term" 
           icon="insights" 
           color="emerald" 
           trend="up" 
@@ -160,7 +160,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
                 description={item.description}
                 status={item.status}
                 imageUrl={item.imageUrl}
-                onClick={() => onNavigateDetail(View.ASSESSMENT, item.id)}
+                onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, item.id)}
               />
             ))}
           </div>
@@ -209,7 +209,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
               >
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-xs font-bold text-slate-500">UX Design Principles</span>
-                  <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">92/100</span>
+                  <span className="text-[10px] font-black uppercase text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded">Exemplary</span>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-slate-400 italic">"Excellent work on the user personas. Consider expanding the..."</p>
               </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View } from '../types';
-import { usePortfolioItems } from '../store';
+import { View, ViewContext } from '../types';
+import { usePortfolioItems, useAppContext } from '../store';
 
 interface PortfolioProps {
   onViewChange: (view: View) => void;
@@ -154,7 +154,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                   title={item.title} 
                   category={item.category} 
                   status={item.status} 
-                  grade={!isPublic ? item.grade : undefined} // Hide grade in public view
+                  assessmentLevel={!isPublic ? item.assessmentLevel : undefined} // Hide assessment in public view
                   imageUrl={item.imageUrl}
                   skills={item.skills}
                   onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, item.id)}
@@ -231,7 +231,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
   );
 };
 
-const ArtifactProjectCard = ({ title, category, status, grade, imageUrl, skills, onClick }: any) => (
+const ArtifactProjectCard = ({ title, category, status, assessmentLevel, imageUrl, skills, onClick }: any) => (
   <div onClick={onClick} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full cursor-pointer text-left">
     <div className="h-44 relative overflow-hidden">
       <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -239,9 +239,9 @@ const ArtifactProjectCard = ({ title, category, status, grade, imageUrl, skills,
       <div className="absolute bottom-4 left-4">
         <span className="text-white font-bold text-lg">{title}</span>
       </div>
-      {grade && (
-        <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-2 border-primary">
-          <span className="text-primary font-bold">{grade}</span>
+      {assessmentLevel && (
+        <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur px-3 py-1 rounded-lg shadow-lg border border-primary/20">
+          <span className="text-primary font-black text-[10px] uppercase tracking-widest">{assessmentLevel}</span>
         </div>
       )}
     </div>
@@ -254,7 +254,7 @@ const ArtifactProjectCard = ({ title, category, status, grade, imageUrl, skills,
         </span>
         <span className="text-xs text-slate-400">•</span>
         <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-          status === 'GRADED' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 
+          status === 'ASSESSED' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 
           status === 'PUBLIC' ? 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300' :
           'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
         }`}>

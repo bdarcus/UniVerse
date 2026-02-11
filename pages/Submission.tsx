@@ -35,7 +35,7 @@ const Submission: React.FC<SubmissionProps> = ({ id, onViewChange }) => {
       Against these rubric criteria:
       ${rubricText}
       
-      Provide 3 specific bullet points on how to improve the score. Be encouraging but rigorous.`;
+      Provide 3 specific bullet points on how to better demonstrate mastery of these criteria. Be encouraging but rigorous.`;
       
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
