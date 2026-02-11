@@ -19,7 +19,7 @@ const PeerReview: React.FC<PeerReviewProps> = ({ onViewChange, onNavigateDetail 
       student: "Jordan Rivers",
       title: "Impact of AI on Journalism",
       category: "Ethics",
-      imageUrl: "https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=800",
+      imageUrl: "https://picsum.photos/seed/journalism/800/600",
       reviewsCount: 3,
       skills: ["Critical Analysis", "Ethics"]
     },
@@ -28,7 +28,7 @@ const PeerReview: React.FC<PeerReviewProps> = ({ onViewChange, onNavigateDetail 
       student: "Casey Bloom",
       title: "Modular Housing Prototype",
       category: "Architecture",
-      imageUrl: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&q=80&w=800",
+      imageUrl: "https://picsum.photos/seed/housing/800/600",
       reviewsCount: 5,
       skills: ["Design Thinking", "Sustainability"]
     },
@@ -37,7 +37,7 @@ const PeerReview: React.FC<PeerReviewProps> = ({ onViewChange, onNavigateDetail 
       student: "Morgan Sun",
       title: "Economic Equity in Fintech",
       category: "Economics",
-      imageUrl: "https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800",
+      imageUrl: "https://picsum.photos/seed/fintech/800/600",
       reviewsCount: 2,
       skills: ["Quantitative Reasoning", "Social Justice"]
     }

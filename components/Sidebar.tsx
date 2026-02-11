@@ -86,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
           <img 
             alt="Student Profile" 
             className="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-slate-700 shadow-sm" 
-            src="https://picsum.photos/seed/student/80/80"
+            src="https://picsum.photos/seed/alexmorgan/80/80"
           />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">Alex Morgan</p>
