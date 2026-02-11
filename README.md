@@ -31,12 +31,18 @@ For a detailed breakdown of our guiding principles, see our [ePortfolio Pedagogy
 ### Unified Portfolio (Repository & Showcase)
 Manage a messy learning archive in your private repository, then curate polished **Showcases** for employers or graduate schools. 
 
+Here's the student's private view:
+
 ![Unified Student Portfolio](resources/img/unified-portfolio.png)
+
+And their public "showcase":
+
+![Pubic Showcase](resources/img/public-showcase.png)
 
 ### Extracurricular Passport
 Verify your impact. Our gamified badge system tracks growth in critical areas like Global Leadership, Civic Engagement, and Innovation. Every badge is backed by a serial-coded evidence log, making achievements undeniable.
 
-![Opportunity Dash](resources/img/opportunity-dash.png)
+![Opportunity Dash](resources/img/badges.png)
 
 ### Integrated Assessment
 Authentic assessment is integrated from the start, for student and faculty alike.
@@ -44,10 +50,6 @@ Authentic assessment is integrated from the start, for student and faculty alike
 ![Faculty Assessment View](resources/img/faculty-assess.png)
 
 ---
-
-## A Screencast
-
-https://github.com/user-attachments/assets/e45bbda1-4b31-44d0-9686-c3e7f3b60fe9
 
 ### Dev Mode Persona Switcher
 To facilitate rapid testing of the prototype, we have implemented a **Global Persona Switcher**. This persistent overlay allows developers to instantly toggle between:
