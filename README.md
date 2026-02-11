@@ -22,7 +22,7 @@ The platform's architecture is grounded in this four-part operational workflow:
 3.  **Reflect:** Metacognitive narratives that explain the *why* behind the work.
 4.  **Connect:** Integrative learning features that link concepts across disciplines and contexts (e.g., connecting a Business Ethics course to a Summer Internship).
 
-For a detailed breakdown of our guiding principles, see our [ePortfolio Pedagogy Framework](docs/EPORTFOLIOS.md).
+For a detailed breakdown of our guiding principles, see our [ePortfolio Pedagogy Framework](docs/EPORTFOLIOS.md) and our [User Stories](docs/USER_STORIES.md).
 
 ---
 
