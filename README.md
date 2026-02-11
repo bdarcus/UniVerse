@@ -25,6 +25,12 @@ Authentic assessment is integrated from the start, for student and faculty alike
 
 ---
 
+## A Screencast
+
+https://github.com/user-attachments/assets/e45bbda1-4b31-44d0-9686-c3e7f3b60fe9
+
+---
+
 ## Technical Stack
 
 UniVerse is built with a focus on performance, accessibility, and modern aesthetics:
