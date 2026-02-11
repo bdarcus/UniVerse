@@ -1,0 +1,8 @@
+{
+  "name": "UniPort Portfolio & Assessment System",
+  "description": "A comprehensive student success platform featuring a dashboard, extracurricular passport, artifact submission, and faculty assessment interface.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
