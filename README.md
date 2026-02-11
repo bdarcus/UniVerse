@@ -24,17 +24,17 @@ Harness the power of **Google Gemini 3 Pro**. Our AI Career Coach doesn't just g
 ### 1. The Student Command Center
 The Dashboard offers a high-fidelity overview of your academic standing, passport progress, and upcoming milestones. It’s designed for clarity, helping you stay ahead of deadlines while tracking your path to the "Gold Tier" scholar status.
 
-![UniVerse Dashboard](./resources/img/dash.png)
-*Modern, card-based interface providing real-time stats and artifact previews.*
+<img src="resources/img/dash.png" width="100%" alt="UniVerse Dashboard">
+<p align="center"><i>Modern, card-based interface providing real-time stats and artifact previews.</i></p>
 
 ### 2. Integrated Assessment
-Assessement is integrated from the start, for students and faculty alike.
+Assessment is integrated from the start, for students and faculty alike.
 
-![Student assessement view](./resources/img/student-assess.png)
-*A student assssement view.*
+<img src="resources/img/student-assess.png" width="100%" alt="Student assessment view">
+<p align="center"><i>A high-fidelity student assessment interface.</i></p>
 
-![Faculty assessement view](./resources/img/faculty-assess.png)
-*A faculty assssement view.*
+<img src="resources/img/faculty-assess.png" width="100%" alt="Faculty assessment view">
+<p align="center"><i>A comprehensive faculty assessment and AI-assisted grading interface.</i></p>
 
 ---
 
