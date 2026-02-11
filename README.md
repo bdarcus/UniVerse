@@ -11,7 +11,7 @@ UniVerse is a modern, high-performance student success platform designed to help
 ### Professional Artifact Portfolio
 Move beyond simple grades. UniVerse provides a sophisticated digital vault where students host their best work, from engineering capstones to data science visualizations. Each artifact is enriched with faculty feedback and competency tracking.
 
-![dashboard](./esources/img/dash.png)
+![dashboard](./resources/img/dash.png)
 
 ### Extracurricular Passport
 Verify your impact. Our gamified badge system tracks growth in critical areas like Global Leadership, Civic Engagement, and Innovation. Every badge is backed by a serial-coded evidence log, making achievements undeniable.
