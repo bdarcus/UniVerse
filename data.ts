@@ -113,6 +113,46 @@ export const portfolioItems: PortfolioItem[] = [
     skills: ["Data Visualization", "JavaScript", "D3.js"]
   },
   {
+    id: "art-4",
+    title: "Tesla Sustainability Internship",
+    category: "Internship",
+    date: "Aug 15, 2023",
+    description: "A 12-week immersive experience working with the Energy Storage team on battery lifecycle analysis.",
+    reflection: "This internship was my first time applying academic systems thinking to a global supply chain. I learned that sustainability isn't just a design choice; it's a series of difficult engineering trade-offs. This work directly informed my Senior Capstone project on renewable grids.",
+    status: "PUBLIC",
+    assessmentLevel: "Exemplary",
+    faculty: "Sarah Jenkins (Tesla Mentor)",
+    imageUrl: "https://picsum.photos/seed/tesla/800/600",
+    skills: ["Supply Chain", "Sustainability", "Professionalism"],
+    connections: ["art-1"]
+  },
+  {
+    id: "art-5",
+    title: "Urban Garden Initiative",
+    category: "Leadership",
+    date: "May 20, 2023",
+    description: "Leading a team of 15 volunteers to convert a vacant lot into a community-managed vegetable garden.",
+    reflection: "Leadership in a volunteer context is vastly different from a classroom setting. I had to navigate local politics, zoning laws, and community conflict. This experience taught me 'Civic Agency'—the ability to work with others to solve public problems.",
+    status: "ASSESSED",
+    assessmentLevel: "Proficient",
+    faculty: "Dr. Marcus Chen",
+    imageUrl: "https://picsum.photos/seed/garden/800/600",
+    skills: ["Civic Agency", "Project Management", "Leadership"],
+    connections: ["art-2"]
+  },
+  {
+    id: "art-6",
+    title: "Global Health Hackathon",
+    category: "Innovation",
+    date: "Mar 12, 2023",
+    description: "Developed a low-bandwidth mobile app for tracking vaccination records in remote areas.",
+    reflection: "Winning 'Best Social Impact' was great, but the real learning was in the rapid prototyping phase. I had to communicate complex technical ideas to non-technical health professionals under high pressure.",
+    status: "PUBLIC",
+    assessmentLevel: "Exemplary",
+    imageUrl: "https://picsum.photos/seed/hackathon/800/600",
+    skills: ["Mobile Dev", "Communication", "Social Impact"]
+  },
+  {
     id: "art-3",
     title: "Ethics in AI",
     category: "Philosophy",
