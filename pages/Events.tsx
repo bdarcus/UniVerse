@@ -33,7 +33,7 @@ const Events: React.FC<EventsProps> = ({ onViewChange }) => {
       category: 'Volunteer',
       reward: '3 Service Hrs',
       badge: 'Civic Engagement',
-      image: 'https://picsum.photos/id/435/800/600',
+      image: 'https://picsum.photos/id/116/800/600',
       registered: true
     },
     {
