@@ -1,8 +1,13 @@
 
 import React, { useState } from 'react';
 import { GoogleGenAI } from "@google/genai";
+import { View } from '../types';
 
-const CareerCoach: React.FC = () => {
+interface CareerCoachProps {
+  onViewChange?: (view: View) => void;
+}
+
+const CareerCoach: React.FC<CareerCoachProps> = ({ onViewChange }) => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState<string | null>(null);
   const [groundingChunks, setGroundingChunks] = useState<any[]>([]);
@@ -75,7 +80,7 @@ const CareerCoach: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Panel: Chat/Analysis */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-7 space-y-6 text-left">
           <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
               <span className="material-icons text-purple-500">chat_bubble</span> Career Consultation
@@ -141,7 +146,7 @@ const CareerCoach: React.FC = () => {
         </div>
 
         {/* Right Panel: Recommendations & Context */}
-        <div className="lg:col-span-5 space-y-6">
+        <div className="lg:col-span-5 space-y-6 text-left">
           <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Your Skill Profile</h2>
             <div className="space-y-4">
@@ -160,11 +165,17 @@ const CareerCoach: React.FC = () => {
             <div className="mt-8">
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Suggested Badges</h3>
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 text-center hover:border-purple-500 cursor-pointer transition-colors group">
+                <div 
+                  onClick={() => onViewChange?.(View.EVENTS)}
+                  className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 text-center hover:border-purple-500 cursor-pointer transition-colors group"
+                >
                   <span className="material-icons text-slate-400 group-hover:text-purple-500 mb-1">analytics</span>
                   <p className="text-[10px] font-bold text-slate-900 dark:text-white">Data Ethics</p>
                 </div>
-                <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 text-center hover:border-purple-500 cursor-pointer transition-colors group">
+                <div 
+                  onClick={() => onViewChange?.(View.EVENTS)}
+                  className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 text-center hover:border-purple-500 cursor-pointer transition-colors group"
+                >
                   <span className="material-icons text-slate-400 group-hover:text-purple-500 mb-1">translate</span>
                   <p className="text-[10px] font-bold text-slate-900 dark:text-white">Cross-Cultural Comm</p>
                 </div>
@@ -180,7 +191,12 @@ const CareerCoach: React.FC = () => {
             <p className="text-sm text-slate-400 mb-4">
               "Alex, your work on Guatemalan water filtration is a major differentiator. When applying for NGOs, highlight the micro-subscription model specifically."
             </p>
-            <button className="text-xs font-bold text-purple-400 hover:text-purple-300">Read More Insights &rarr;</button>
+            <button 
+              onClick={() => onViewChange?.(View.PORTFOLIO)}
+              className="text-xs font-bold text-purple-400 hover:text-purple-300"
+            >
+              Read More Insights &rarr;
+            </button>
           </div>
         </div>
       </div>

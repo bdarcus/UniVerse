@@ -33,6 +33,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
           subText="Gold Tier Candidate" 
           icon="military_tech" 
           color="amber" 
+          onClick={() => onViewChange(View.PORTFOLIO)}
         />
         <StatCard 
           label="Pending Actions" 
@@ -40,12 +41,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
           subText="Next due: Tomorrow" 
           icon="priority_high" 
           color="rose" 
+          onClick={() => onViewChange(View.SUBMISSION)}
         />
       </section>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Portfolio Preview */}
-        <section className="lg:col-span-2 space-y-6">
+        <section className="lg:col-span-2 space-y-6 text-left">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span className="material-icons text-primary">collections_bookmark</span> Recent Artifacts
@@ -65,7 +67,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
               date="Oct 24, 2023"
               description="A comprehensive study on integrating solar microgrids into urban infrastructure."
               status="PUBLIC"
-              imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuDpcwarmj8eDYdna4LOX86k2_3NWohSBnaR_paXMKB7RiXnhZrRCxQxZ7uPp9muAt7VdSXOdZbGHNbHHV_TVyKN5r6XZtyyh_lUgHM-2SWy6vSeJjYAvnZwAXOIneSOItQD7LKwTBGN9wZVFxtuOigZQsLJC6lCY-y9FE0_YR8kjwHwlgVyndLtJHuQQY5zLa2BIRZiHrE5tFWJXTRgENGKE7fNRcCsZULzDeXxchMx673n5sudgCdBgWSJmd67i6_lwEDSAHoGw8o"
+              imageUrl="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800"
+              onClick={() => onViewChange(View.PORTFOLIO)}
             />
             <PortfolioCard 
               title="Visualization Techniques" 
@@ -73,7 +76,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
               date="Nov 02, 2023"
               description="Exploration of D3.js libraries for presenting complex sociological datasets."
               status="DRAFT"
-              imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuB_civ_aUIPSohNq2nIsfc3LiPZrxpK6-u4lOxI-8ca6oW2Tba0E6eCc7Z1SPfET8a0DV18sY_QmZRVHc4D8hGtO77TJNSl7N2sN6ZBMRiC7HCC-MR6Np1NiHLIqCjAxG3nk-gk33iqrOXbeJoHsGk_EoVozkcM7uTidoCepPEmqsq0mBowHusJs_TSdC0L67ZCLnhHgfo_410q4tKIIqXZRQbkJ74jafee4PBLqvEPEkjtafpZoJf9-GVHkTNtTW02Xnchk9gm3ZY"
+              imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
+              onClick={() => onViewChange(View.PORTFOLIO)}
             />
           </div>
           
@@ -87,7 +91,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
         </section>
 
         {/* Assessments Feed */}
-        <section className="space-y-6">
+        <section className="space-y-6 text-left">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span className="material-icons text-primary">assignment</span> Assessments
@@ -98,14 +102,31 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
             <div>
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Upcoming Due Dates</h3>
               <div className="space-y-4">
-                <DueItem month="NOV" day="12" title="Algorithm Analysis Paper" sub="CS 301 • Dr. Smith" tags={['Research', 'High Priority']} isAlert />
-                <DueItem month="NOV" day="15" title="Midterm Reflection" sub="ETHICS 101 • Prof. Lee" />
+                <DueItem 
+                  month="NOV" 
+                  day="12" 
+                  title="Algorithm Analysis Paper" 
+                  sub="CS 301 • Dr. Smith" 
+                  tags={['Research', 'High Priority']} 
+                  isAlert 
+                  onClick={() => onViewChange(View.SUBMISSION)}
+                />
+                <DueItem 
+                  month="NOV" 
+                  day="15" 
+                  title="Midterm Reflection" 
+                  sub="ETHICS 101 • Prof. Lee" 
+                  onClick={() => onViewChange(View.SUBMISSION)}
+                />
               </div>
             </div>
             
             <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Recent Feedback</h3>
-              <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-100 dark:border-slate-700">
+              <div 
+                onClick={() => onViewChange(View.PORTFOLIO)}
+                className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-100 dark:border-slate-700 cursor-pointer hover:bg-slate-100 transition-colors"
+              >
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-xs font-bold text-slate-500">UX Design Principles</span>
                   <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">92/100</span>
@@ -118,7 +139,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
       </div>
 
       {/* Passport Summary */}
-      <section className="space-y-6">
+      <section className="space-y-6 text-left">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <span className="material-icons text-primary">military_tech</span> My Passport
@@ -139,12 +160,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
             </div>
             
             <div className="md:col-span-2 flex flex-wrap gap-4 justify-center md:justify-end">
-              <BadgeIcon icon="public" label="Global Citizen" active />
-              <BadgeIcon icon="code" label="Hackathon" />
-              <BadgeIcon icon="volunteer_activism" label="Volunteer" />
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-16 h-16 rounded-full bg-slate-800/50 border border-dashed border-slate-600 flex items-center justify-center hover:bg-slate-800 transition-colors cursor-pointer">
-                  <span className="text-xs text-slate-400 font-medium">+9 More</span>
+              <BadgeIcon icon="public" label="Global Citizen" active onClick={() => onViewChange(View.PORTFOLIO)} />
+              <BadgeIcon icon="code" label="Hackathon" onClick={() => onViewChange(View.PORTFOLIO)} />
+              <BadgeIcon icon="volunteer_activism" label="Volunteer" onClick={() => onViewChange(View.PORTFOLIO)} />
+              <div onClick={() => onViewChange(View.PORTFOLIO)} className="flex flex-col items-center gap-2 cursor-pointer group">
+                <div className="w-16 h-16 rounded-full bg-slate-800/50 border border-dashed border-slate-600 flex items-center justify-center hover:bg-slate-800 transition-colors">
+                  <span className="text-xs text-slate-400 font-medium group-hover:text-white">+9 More</span>
                 </div>
                 <span className="text-xs font-medium text-transparent">Hidden</span>
               </div>
@@ -156,7 +177,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
   );
 };
 
-const StatCard = ({ label, value, total, subText, icon, color, progress, trend }: any) => {
+const StatCard = ({ label, value, total, subText, icon, color, progress, trend, onClick }: any) => {
   const colorMap: any = {
     blue: 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400',
     emerald: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400',
@@ -165,10 +186,13 @@ const StatCard = ({ label, value, total, subText, icon, color, progress, trend }
   };
 
   return (
-    <div className={`bg-white dark:bg-[#151b2b] rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group hover:border-primary/30 transition-colors`}>
+    <div 
+      onClick={onClick}
+      className={`bg-white dark:bg-[#151b2b] rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between h-32 relative overflow-hidden group hover:border-primary/30 transition-colors cursor-pointer`}
+    >
       <div className={`absolute -right-6 -top-6 w-24 h-24 bg-slate-500/5 rounded-full group-hover:bg-slate-500/10 transition-colors`}></div>
       <div className="flex items-start justify-between relative z-10">
-        <div>
+        <div className="text-left">
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">{label}</p>
           <h3 className="text-3xl font-bold text-slate-900 dark:text-white">
             {value}{total && <span className="text-lg text-slate-400 font-normal">{total}</span>}
@@ -192,8 +216,8 @@ const StatCard = ({ label, value, total, subText, icon, color, progress, trend }
   );
 };
 
-const PortfolioCard = ({ title, category, date, description, status, imageUrl }: any) => (
-  <div className="bg-white dark:bg-[#151b2b] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+const PortfolioCard = ({ title, category, date, description, status, imageUrl, onClick }: any) => (
+  <div onClick={onClick} className="bg-white dark:bg-[#151b2b] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group cursor-pointer text-left h-full flex flex-col">
     <div className="h-40 bg-slate-200 relative overflow-hidden">
       <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={imageUrl} alt={title} />
       <div className={`absolute top-3 right-3 backdrop-blur px-2 py-1 rounded text-xs font-bold ${
@@ -204,7 +228,7 @@ const PortfolioCard = ({ title, category, date, description, status, imageUrl }:
         {status}
       </div>
     </div>
-    <div className="p-4">
+    <div className="p-4 flex-1">
       <div className="flex items-center gap-2 mb-2">
         <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
           category === 'Engineering' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' : 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'
@@ -219,10 +243,9 @@ const PortfolioCard = ({ title, category, date, description, status, imageUrl }:
   </div>
 );
 
-const DueItem = ({ month, day, title, sub, tags, isAlert }: any) => (
-  <div className="flex gap-3 group cursor-pointer">
+const DueItem = ({ month, day, title, sub, tags, isAlert, onClick }: any) => (
+  <div onClick={onClick} className="flex gap-3 group cursor-pointer text-left">
     <div className="flex flex-col items-center min-w-[3rem]">
-      {/* Fix: Added missing 'className' attribute */}
       <span className={`text-xs font-bold uppercase ${isAlert ? 'text-rose-500' : 'text-slate-500'}`}>{month}</span>
       <span className="text-lg font-bold text-slate-900 dark:text-white">{day}</span>
     </div>
@@ -245,8 +268,8 @@ const DueItem = ({ month, day, title, sub, tags, isAlert }: any) => (
   </div>
 );
 
-const BadgeIcon = ({ icon, label, active }: any) => (
-  <div className="flex flex-col items-center gap-2 group cursor-pointer">
+const BadgeIcon = ({ icon, label, active, onClick }: any) => (
+  <div onClick={onClick} className="flex flex-col items-center gap-2 group cursor-pointer">
     <div className={`w-16 h-16 rounded-full bg-slate-800 border-2 flex items-center justify-center shadow-lg relative group-hover:-translate-y-1 transition-transform ${
       active ? 'border-accent-gold' : 'border-slate-600'
     }`}>

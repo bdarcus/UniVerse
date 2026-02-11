@@ -1,7 +1,12 @@
 
 import React, { useState } from 'react';
+import { View } from '../types';
 
-const Events: React.FC = () => {
+interface EventsProps {
+  onViewChange?: (view: View) => void;
+}
+
+const Events: React.FC<EventsProps> = ({ onViewChange }) => {
   const [activeFilter, setActiveFilter] = useState('All');
 
   const categories = ['All', 'Workshops', 'Volunteer', 'Campus Life', 'Competitions'];
@@ -16,7 +21,7 @@ const Events: React.FC = () => {
       category: 'Workshops',
       reward: '+100 XP',
       badge: 'Leadership',
-      image: 'https://images.unsplash.com/photo-1540575861501-7ad05823c983?auto=format&fit=crop&q=80&w=400',
+      image: 'https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?auto=format&fit=crop&q=80&w=800',
       registered: false
     },
     {
@@ -28,7 +33,7 @@ const Events: React.FC = () => {
       category: 'Volunteer',
       reward: '3 Service Hrs',
       badge: 'Civic Engagement',
-      image: 'https://images.unsplash.com/photo-1592595894519-32219e2e6216?auto=format&fit=crop&q=80&w=400',
+      image: 'https://images.unsplash.com/photo-1591079838758-6c7672719eb7?auto=format&fit=crop&q=80&w=800',
       registered: true
     },
     {
@@ -40,7 +45,7 @@ const Events: React.FC = () => {
       category: 'Workshops',
       reward: '+50 XP',
       badge: 'Professional Dev',
-      image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=400',
+      image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800',
       registered: false
     },
     {
@@ -52,7 +57,7 @@ const Events: React.FC = () => {
       category: 'Competitions',
       reward: 'Gold Badge Link',
       badge: 'Innovation',
-      image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=400',
+      image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800',
       registered: false
     }
   ];
@@ -63,7 +68,7 @@ const Events: React.FC = () => {
 
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 text-left">
         <div>
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Opportunity Catalog</h1>
           <p className="text-slate-500 dark:text-slate-400">Discover events that fuel your personal and professional growth.</p>
@@ -97,11 +102,11 @@ const Events: React.FC = () => {
       {/* Opportunities Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map(item => (
-          <div key={item.id} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full">
-            <div className="relative h-48 overflow-hidden">
+          <div key={item.id} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full text-left">
+            <div className="relative h-48 overflow-hidden bg-slate-200 dark:bg-slate-800">
               <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
               <div className="absolute top-4 left-4">
-                <div className="bg-white/90 dark:bg-black/70 backdrop-blur px-2 py-1 rounded-lg text-center shadow-lg">
+                <div className="bg-white/90 dark:bg-black/70 backdrop-blur px-2 py-1 rounded-lg text-center shadow-lg min-w-[3rem]">
                   <p className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 leading-none mb-1">{item.date.split(' ')[0]}</p>
                   <p className="text-lg font-bold text-slate-900 dark:text-white leading-none">{item.date.split(' ')[1]}</p>
                 </div>
@@ -133,7 +138,9 @@ const Events: React.FC = () => {
                   <span className="material-icons text-amber-500 text-base">military_tech</span>
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-400">{item.badge}</span>
                 </div>
-                <button className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                <button 
+                  onClick={() => !item.registered && alert(`Registered for ${item.title}`)}
+                  className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   item.registered 
                     ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-default' 
                     : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'

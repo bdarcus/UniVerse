@@ -20,17 +20,17 @@ const App: React.FC = () => {
       case View.DASHBOARD:
         return <Dashboard onViewChange={setActiveView} />;
       case View.PORTFOLIO:
-        return <Portfolio />;
+        return <Portfolio onViewChange={setActiveView} />;
       case View.SUBMISSION:
-        return <Submission />;
+        return <Submission onViewChange={setActiveView} />;
       case View.ASSESSMENT:
-        return <Assessment />;
+        return <Assessment onViewChange={setActiveView} />;
       case View.EVENTS:
-        return <Events />;
+        return <Events onViewChange={setActiveView} />;
       case View.SETTINGS:
         return <Settings />;
       case View.COACH:
-        return <CareerCoach />;
+        return <CareerCoach onViewChange={setActiveView} />;
       default:
         return (
           <div className="p-8 text-center">
@@ -60,6 +60,7 @@ const App: React.FC = () => {
           viewTitle={activeView === View.DASHBOARD ? 'Dashboard' : activeView.charAt(0).toUpperCase() + activeView.slice(1)} 
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
+          onViewChange={setActiveView}
         />
         <main className="flex-1 overflow-y-auto">
           {renderContent()}

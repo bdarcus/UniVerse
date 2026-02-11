@@ -1,20 +1,22 @@
 
 import React from 'react';
+import { View } from '../types';
 
 interface TopHeaderProps {
   viewTitle: string;
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+  onViewChange?: (view: View) => void;
 }
 
-const TopHeader: React.FC<TopHeaderProps> = ({ viewTitle, isDarkMode, toggleDarkMode }) => {
+const TopHeader: React.FC<TopHeaderProps> = ({ viewTitle, isDarkMode, toggleDarkMode, onViewChange }) => {
   return (
     <header className="sticky top-0 z-30 bg-white/80 dark:bg-[#101622]/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between h-16">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 text-left">
         <button className="md:hidden p-2 -ml-2 text-slate-600 dark:text-slate-300">
           <span className="material-icons">menu</span>
         </button>
-        <div>
+        <div className="cursor-pointer" onClick={() => onViewChange?.(View.DASHBOARD)}>
           <h1 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">{viewTitle}</h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Welcome back, Alex</p>
         </div>

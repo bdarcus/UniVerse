@@ -1,7 +1,13 @@
 
 import React from 'react';
+import { View } from '../types';
 
-const Assessment: React.FC = () => {
+// Define props for Assessment component to match usage in App.tsx
+interface AssessmentProps {
+  onViewChange?: (view: View) => void;
+}
+
+const Assessment: React.FC<AssessmentProps> = ({ onViewChange }) => {
   return (
     <div className="h-full flex overflow-hidden animate-in fade-in duration-500">
       {/* Left Panel: Artifact Viewer */}

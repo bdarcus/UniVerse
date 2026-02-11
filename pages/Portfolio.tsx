@@ -1,16 +1,21 @@
 
 import React, { useState } from 'react';
+import { View } from '../types';
 
-const Portfolio: React.FC = () => {
+interface PortfolioProps {
+  onViewChange: (view: View) => void;
+}
+
+const Portfolio: React.FC<PortfolioProps> = ({ onViewChange }) => {
   const [activeTab, setActiveTab] = useState<'passport' | 'artifacts'>('passport');
 
   return (
     <div className="animate-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
-          <div className="space-y-2">
+          <div className="space-y-2 text-left">
             <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-              <span className="hover:text-primary cursor-pointer">Home</span>
+              <span className="hover:text-primary cursor-pointer" onClick={() => onViewChange(View.DASHBOARD)}>Home</span>
               <span className="material-icons text-xs">chevron_right</span>
               <span className="text-primary font-medium">Portfolio</span>
             </div>
@@ -62,7 +67,7 @@ const Portfolio: React.FC = () => {
         </div>
 
         {activeTab === 'passport' ? (
-          <div className="space-y-8 animate-in fade-in duration-300">
+          <div className="space-y-8 animate-in fade-in duration-300 text-left">
             {/* Stats Summary */}
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <StatMiniCard icon="military_tech" label="Badges Earned" value="12" color="blue" />
@@ -91,6 +96,7 @@ const Portfolio: React.FC = () => {
                 progressText="15 / 20 Hours"
                 footer="Last updated 2d ago"
                 actionLabel="Log Hours"
+                onActionClick={() => onViewChange(View.SUBMISSION)}
               />
               <AchievementCard 
                 icon="groups" 
@@ -101,33 +107,37 @@ const Portfolio: React.FC = () => {
                 progressText="1 / 4 Months"
                 footer="Ongoing"
                 actionLabel="Details"
+                onActionClick={() => onViewChange(View.EVENTS)}
               />
             </div>
           </div>
         ) : (
-          <div className="space-y-8 animate-in fade-in duration-300">
+          <div className="space-y-8 animate-in fade-in duration-300 text-left">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <ArtifactProjectCard 
                 title="Capstone: Renewable Grid" 
                 category="Engineering" 
                 status="GRADED" 
                 grade="A"
-                imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuDpcwarmj8eDYdna4LOX86k2_3NWohSBnaR_paXMKB7RiXnhZrRCxQxZ7uPp9muAt7VdSXOdZbGHNbHHV_TVyKN5r6XZtyyh_lUgHM-2SWy6vSeJjYAvnZwAXOIneSOItQD7LKwTBGN9wZVFxtuOigZQsLJC6lCY-y9FE0_YR8kjwHwlgVyndLtJHuQQY5zLa2BIRZiHrE5tFWJXTRgENGKE7fNRcCsZULzDeXxchMx673n5sudgCdBgWSJmd67i6_lwEDSAHoGw8o"
+                imageUrl="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800"
               />
               <ArtifactProjectCard 
                 title="Visualization Techniques" 
                 category="Data Science" 
                 status="GRADED" 
                 grade="B+"
-                imageUrl="https://lh3.googleusercontent.com/aida-public/AB6AXuB_civ_aUIPSohNq2nIsfc3LiPZrxpK6-u4lOxI-8ca6oW2Tba0E6eCc7Z1SPfET8a0DV18sY_QmZRVHc4D8hGtO77TJNSl7N2sN6ZBMRiC7HCC-MR6Np1NiHLIqCjAxG3nk-gk33iqrOXbeJoHsGk_EoVozkcM7uTidoCepPEmqsq0mBowHusJs_TSdC0L67ZCLnhHgfo_410q4tKIIqXZRQbkJ74jafee4PBLqvEPEkjtafpZoJf9-GVHkTNtTW02Xnchk9gm3ZY"
+                imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
               />
               <ArtifactProjectCard 
                 title="Ethics in AI" 
                 category="Philosophy" 
                 status="PENDING" 
-                imageUrl="https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&q=80&w=400"
+                imageUrl="https://images.unsplash.com/photo-1675557009875-436f2978a6fa?auto=format&fit=crop&q=80&w=800"
               />
-              <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer">
+              <div 
+                onClick={() => onViewChange(View.SUBMISSION)}
+                className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer h-full min-h-[250px]"
+              >
                 <span className="material-icons text-3xl text-slate-400 group-hover:text-primary mb-2">add_circle_outline</span>
                 <p className="text-sm font-bold text-slate-600 dark:text-slate-400">Add Project Artifact</p>
               </div>
@@ -140,7 +150,7 @@ const Portfolio: React.FC = () => {
 };
 
 const ArtifactProjectCard = ({ title, category, status, grade, imageUrl }: any) => (
-  <div className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group">
+  <div className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full">
     <div className="h-44 relative overflow-hidden">
       <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -153,7 +163,7 @@ const ArtifactProjectCard = ({ title, category, status, grade, imageUrl }: any) 
         </div>
       )}
     </div>
-    <div className="p-4 flex items-center justify-between">
+    <div className="p-4 flex items-center justify-between mt-auto">
       <div>
         <span className="text-[10px] font-bold uppercase text-slate-400 tracking-widest">{category}</span>
       </div>
@@ -185,7 +195,7 @@ const StatMiniCard = ({ icon, label, value, color }: any) => {
   );
 };
 
-const AchievementCard = ({ icon, title, category, description, progress, status, footer, progressText, actionLabel }: any) => (
+const AchievementCard = ({ icon, title, category, description, progress, status, footer, progressText, actionLabel, onActionClick }: any) => (
   <div className={`group relative bg-white dark:bg-[#151b2b] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 overflow-hidden flex flex-col h-full ${status === 'LOCKED' ? 'opacity-75' : ''}`}>
     {status === 'COMPLETED' && (
       <div className="absolute top-0 right-0">
@@ -225,7 +235,12 @@ const AchievementCard = ({ icon, title, category, description, progress, status,
         {footer}
       </span>
       {actionLabel ? (
-        <button className="px-3 py-1 bg-primary text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors shadow-sm">{actionLabel}</button>
+        <button 
+          onClick={onActionClick}
+          className="px-3 py-1 bg-primary text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors shadow-sm"
+        >
+          {actionLabel}
+        </button>
       ) : (
         <button className={`text-sm font-medium transition-colors ${status === 'LOCKED' ? 'text-slate-400 cursor-not-allowed' : 'text-primary hover:text-blue-700 dark:hover:text-blue-400'}`}>
           {status === 'LOCKED' ? 'View Requirements' : 'View Badge'}
