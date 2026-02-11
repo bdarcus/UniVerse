@@ -45,6 +45,13 @@
 *   **Task:** Accessibility audit (WCAG 2.1) to ensure inclusivity.
 *   **Task:** Performance tuning (React renders).
 
+## Phase 5: Accreditation & Evidence Management (The "ROI" for Institutions)
+**Objective:** Transform individual portfolios into institutional evidence for accreditation.
+*   **Feature: Hierarchical Analytics Dashboards.** Create distinct views for Program, Unit, Division, and Institutional Coordinators to track standards (e.g., ABET, HLC).
+*   **Feature: Evidence Set Curation.** A tool for coordinators to "bundle" anonymized high-quality examples of student work, faculty feedback, and rubrics into a shareable dossier for accreditation reviewers.
+*   **Feature: Employer/Reviewer Verification Path.** Enhance the Public Showcase so external stakeholders can "drill down" from a high-level badge directly into the serialized evidence logs and assessment rubrics.
+*   **Research Integration:** *Accountability vs. Improvement* - balancing the need for institutional data with the goal of student growth.
+
 ---
 
 ## Continuous Improvement Loop
