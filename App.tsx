@@ -10,17 +10,25 @@ import Assessment from './pages/Assessment';
 import Events from './pages/Events';
 import Settings from './pages/Settings';
 import CareerCoach from './pages/CareerCoach';
+import ArtifactDetail from './pages/ArtifactDetail';
+import BadgeDetail from './pages/BadgeDetail';
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>(View.DASHBOARD);
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const navigateToDetail = (view: View, id: string) => {
+    setSelectedItemId(id);
+    setActiveView(view);
+  };
 
   const renderContent = () => {
     switch (activeView) {
       case View.DASHBOARD:
-        return <Dashboard onViewChange={setActiveView} />;
+        return <Dashboard onViewChange={setActiveView} onNavigateDetail={navigateToDetail} />;
       case View.PORTFOLIO:
-        return <Portfolio onViewChange={setActiveView} />;
+        return <Portfolio onViewChange={setActiveView} onNavigateDetail={navigateToDetail} />;
       case View.SUBMISSION:
         return <Submission onViewChange={setActiveView} />;
       case View.ASSESSMENT:
@@ -31,6 +39,10 @@ const App: React.FC = () => {
         return <Settings />;
       case View.COACH:
         return <CareerCoach onViewChange={setActiveView} />;
+      case View.ARTIFACT_DETAIL:
+        return <ArtifactDetail id={selectedItemId} onViewChange={setActiveView} />;
+      case View.BADGE_DETAIL:
+        return <BadgeDetail id={selectedItemId} onViewChange={setActiveView} />;
       default:
         return (
           <div className="p-8 text-center">
@@ -57,7 +69,7 @@ const App: React.FC = () => {
       <Sidebar activeView={activeView} onViewChange={setActiveView} />
       <div className="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark">
         <TopHeader 
-          viewTitle={activeView === View.DASHBOARD ? 'Dashboard' : activeView.charAt(0).toUpperCase() + activeView.slice(1)} 
+          viewTitle={activeView === View.DASHBOARD ? 'Dashboard' : activeView.replace('_', ' ').charAt(0).toUpperCase() + activeView.replace('_', ' ').slice(1)} 
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
           onViewChange={setActiveView}

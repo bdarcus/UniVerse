@@ -4,9 +4,10 @@ import { View } from '../types';
 
 interface DashboardProps {
   onViewChange: (view: View) => void;
+  onNavigateDetail: (view: View, id: string) => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
+const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail }) => {
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
       {/* Stats Cards */}
@@ -68,7 +69,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
               description="A comprehensive study on integrating solar microgrids into urban infrastructure."
               status="PUBLIC"
               imageUrl="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800"
-              onClick={() => onViewChange(View.PORTFOLIO)}
+              onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-1")}
             />
             <PortfolioCard 
               title="Visualization Techniques" 
@@ -77,7 +78,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
               description="Exploration of D3.js libraries for presenting complex sociological datasets."
               status="DRAFT"
               imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
-              onClick={() => onViewChange(View.PORTFOLIO)}
+              onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-2")}
             />
           </div>
           
@@ -160,9 +161,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange }) => {
             </div>
             
             <div className="md:col-span-2 flex flex-wrap gap-4 justify-center md:justify-end">
-              <BadgeIcon icon="public" label="Global Citizen" active onClick={() => onViewChange(View.PORTFOLIO)} />
-              <BadgeIcon icon="code" label="Hackathon" onClick={() => onViewChange(View.PORTFOLIO)} />
-              <BadgeIcon icon="volunteer_activism" label="Volunteer" onClick={() => onViewChange(View.PORTFOLIO)} />
+              <BadgeIcon icon="public" label="Global Citizen" active onClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-1")} />
+              <BadgeIcon icon="code" label="Hackathon" onClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-2")} />
+              <BadgeIcon icon="volunteer_activism" label="Volunteer" onClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-3")} />
               <div onClick={() => onViewChange(View.PORTFOLIO)} className="flex flex-col items-center gap-2 cursor-pointer group">
                 <div className="w-16 h-16 rounded-full bg-slate-800/50 border border-dashed border-slate-600 flex items-center justify-center hover:bg-slate-800 transition-colors">
                   <span className="text-xs text-slate-400 font-medium group-hover:text-white">+9 More</span>

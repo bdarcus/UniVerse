@@ -6,7 +6,9 @@ export enum View {
   ASSESSMENT = 'assessment',
   EVENTS = 'events',
   SETTINGS = 'settings',
-  COACH = 'coach'
+  COACH = 'coach',
+  ARTIFACT_DETAIL = 'artifact_detail',
+  BADGE_DETAIL = 'badge_detail'
 }
 
 export interface PortfolioItem {
@@ -16,7 +18,10 @@ export interface PortfolioItem {
   date: string;
   description: string;
   imageUrl: string;
-  status: 'PUBLIC' | 'DRAFT';
+  status: 'PUBLIC' | 'DRAFT' | 'GRADED';
+  grade?: string;
+  feedback?: string;
+  faculty?: string;
 }
 
 export interface Achievement {
@@ -29,4 +34,6 @@ export interface Achievement {
   date?: string;
   hours?: string;
   icon: string;
+  passportId: string;
+  skills: string[];
 }

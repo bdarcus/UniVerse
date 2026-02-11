@@ -4,9 +4,10 @@ import { View } from '../types';
 
 interface PortfolioProps {
   onViewChange: (view: View) => void;
+  onNavigateDetail: (view: View, id: string) => void;
 }
 
-const Portfolio: React.FC<PortfolioProps> = ({ onViewChange }) => {
+const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail }) => {
   const [activeTab, setActiveTab] = useState<'passport' | 'artifacts'>('passport');
 
   return (
@@ -86,6 +87,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange }) => {
                 progress={100}
                 status="COMPLETED"
                 footer="Oct 24, 2023"
+                onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-crw")}
               />
               <AchievementCard 
                 icon="volunteer_activism" 
@@ -96,7 +98,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange }) => {
                 progressText="15 / 20 Hours"
                 footer="Last updated 2d ago"
                 actionLabel="Log Hours"
-                onActionClick={() => onViewChange(View.SUBMISSION)}
+                onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cel")}
               />
               <AchievementCard 
                 icon="groups" 
@@ -107,7 +109,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange }) => {
                 progressText="1 / 4 Months"
                 footer="Ongoing"
                 actionLabel="Details"
-                onActionClick={() => onViewChange(View.EVENTS)}
+                onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cot")}
               />
             </div>
           </div>
@@ -120,19 +122,22 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange }) => {
                 status="GRADED" 
                 grade="A"
                 imageUrl="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800"
+                onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-1")}
               />
               <ArtifactProjectCard 
                 title="Visualization Techniques" 
                 category="Data Science" 
                 status="GRADED" 
                 grade="B+"
-                imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
+                imageUrl="https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=800"
+                onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-2")}
               />
               <ArtifactProjectCard 
                 title="Ethics in AI" 
                 category="Philosophy" 
                 status="PENDING" 
                 imageUrl="https://images.unsplash.com/photo-1675557009875-436f2978a6fa?auto=format&fit=crop&q=80&w=800"
+                onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-3")}
               />
               <div 
                 onClick={() => onViewChange(View.SUBMISSION)}
@@ -149,12 +154,12 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange }) => {
   );
 };
 
-const ArtifactProjectCard = ({ title, category, status, grade, imageUrl }: any) => (
-  <div className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full">
+const ArtifactProjectCard = ({ title, category, status, grade, imageUrl, onClick }: any) => (
+  <div onClick={onClick} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full cursor-pointer">
     <div className="h-44 relative overflow-hidden">
       <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-      <div className="absolute bottom-4 left-4">
+      <div className="absolute bottom-4 left-4 text-left">
         <span className="text-white font-bold text-lg">{title}</span>
       </div>
       {grade && (
@@ -196,7 +201,7 @@ const StatMiniCard = ({ icon, label, value, color }: any) => {
 };
 
 const AchievementCard = ({ icon, title, category, description, progress, status, footer, progressText, actionLabel, onActionClick }: any) => (
-  <div className={`group relative bg-white dark:bg-[#151b2b] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 overflow-hidden flex flex-col h-full ${status === 'LOCKED' ? 'opacity-75' : ''}`}>
+  <div onClick={onActionClick} className={`group relative bg-white dark:bg-[#151b2b] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer ${status === 'LOCKED' ? 'opacity-75' : ''}`}>
     {status === 'COMPLETED' && (
       <div className="absolute top-0 right-0">
         <div className="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs font-bold px-3 py-1 rounded-bl-xl border-l border-b border-green-200 dark:border-green-800">
@@ -217,8 +222,8 @@ const AchievementCard = ({ icon, title, category, description, progress, status,
           {category}
         </span>
       </div>
-      <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">{title}</h3>
-      <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">{description}</p>
+      <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors text-left">{title}</h3>
+      <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2 text-left">{description}</p>
       <div className="space-y-2">
         <div className="flex justify-between text-xs font-medium">
           <span className="text-slate-700 dark:text-slate-300">{progressText || 'Progress'}</span>
@@ -236,7 +241,7 @@ const AchievementCard = ({ icon, title, category, description, progress, status,
       </span>
       {actionLabel ? (
         <button 
-          onClick={onActionClick}
+          onClick={(e) => { e.stopPropagation(); onActionClick(); }}
           className="px-3 py-1 bg-primary text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors shadow-sm"
         >
           {actionLabel}
