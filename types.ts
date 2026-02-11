@@ -22,6 +22,8 @@ export interface PortfolioItem {
   grade?: string;
   feedback?: string;
   faculty?: string;
+  credits?: string;
+  skills?: string[];
 }
 
 export interface Achievement {

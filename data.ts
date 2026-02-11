@@ -92,7 +92,8 @@ export const portfolioItems: PortfolioItem[] = [
     credits: "4.0",
     faculty: "Dr. Elena Rodriguez",
     feedback: "Exceptional research Alex. Your focus on the micro-subscription model is particularly innovative.",
-    imageUrl: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800"
+    imageUrl: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800",
+    skills: ["Sustainable Design", "Urban Planning", "Systems Thinking"]
   },
   {
     id: "art-2",
@@ -105,7 +106,8 @@ export const portfolioItems: PortfolioItem[] = [
     credits: "3.0",
     faculty: "Prof. Marcus Chen",
     feedback: "The data processing is solid, but the color contrast in the main visualization could be improved for accessibility.",
-    imageUrl: "https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
+    imageUrl: "https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800",
+    skills: ["Data Visualization", "JavaScript", "D3.js"]
   },
   {
     id: "art-3",
@@ -114,6 +116,7 @@ export const portfolioItems: PortfolioItem[] = [
     status: "DRAFT",
     date: "Dec 01, 2023",
     description: "A philosophical inquiry into the moral agency of artificial intelligence.",
-    imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4628c6720?auto=format&fit=crop&q=80&w=800"
+    imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4628c6720?auto=format&fit=crop&q=80&w=800",
+    skills: ["Critical Thinking", "Ethics"]
   }
 ];

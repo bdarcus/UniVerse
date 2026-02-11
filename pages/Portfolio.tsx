@@ -124,6 +124,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                   status={item.status} 
                   grade={item.grade}
                   imageUrl={item.imageUrl}
+                  skills={item.skills}
                   onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, item.id)}
                 />
               ))}
@@ -142,7 +143,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
   );
 };
 
-const ArtifactProjectCard = ({ title, category, status, grade, imageUrl, onClick }: any) => (
+const ArtifactProjectCard = ({ title, category, status, grade, imageUrl, skills, onClick }: any) => (
   <div onClick={onClick} className="bg-white dark:bg-[#151b2b] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full cursor-pointer text-left">
     <div className="h-44 relative overflow-hidden">
       <img src={imageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -156,14 +157,37 @@ const ArtifactProjectCard = ({ title, category, status, grade, imageUrl, onClick
         </div>
       )}
     </div>
-    <div className="p-4 flex items-center justify-between mt-auto">
-      <div>
-        <span className="text-[10px] font-bold uppercase text-slate-400 tracking-widest">{category}</span>
+    <div className="p-4 flex-1 flex flex-col">
+      <div className="flex items-center gap-2 mb-3">
+        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+          category === 'Engineering' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' : 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'
+        }`}>
+          {category}
+        </span>
+        <span className="text-xs text-slate-400">•</span>
+        <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+          status === 'GRADED' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 
+          status === 'PUBLIC' ? 'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300' :
+          'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'
+        }`}>
+          {status}
+        </span>
       </div>
-      <div className="flex items-center gap-2">
-        <span className={`w-2 h-2 rounded-full ${status === 'GRADED' ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
-        <span className="text-xs font-medium text-slate-600 dark:text-slate-400">{status}</span>
-      </div>
+      
+      {skills && skills.length > 0 && (
+        <div className="flex flex-wrap gap-1 mt-auto">
+          {skills.slice(0, 3).map((skill: string) => (
+            <span key={skill} className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] rounded border border-slate-200 dark:border-slate-700">
+              {skill}
+            </span>
+          ))}
+          {skills.length > 3 && (
+            <span className="px-1.5 py-0.5 bg-slate-50 dark:bg-slate-800/50 text-slate-400 text-[10px] rounded">
+              +{skills.length - 3}
+            </span>
+          )}
+        </div>
+      )}
     </div>
   </div>
 );

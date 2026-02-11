@@ -197,8 +197,13 @@ const Submission: React.FC<SubmissionProps> = ({ id, onViewChange }) => {
   );
 };
 
-const RubGuideProps = { title: '', weight: '', desc: '', active: false };
-const RubricGuide = ({ title, weight, desc, active }: typeof RubGuideProps) => (
+interface RubricGuideProps {
+  title: string;
+  weight: string;
+  desc: string;
+  active: boolean;
+}
+const RubricGuide: React.FC<RubricGuideProps> = ({ title, weight, desc, active }) => (
   <div className={`p-4 rounded-xl border transition-all ${active ? 'border-emerald-500/50 bg-emerald-500/5' : 'border-slate-100 dark:border-slate-800'}`}>
     <div className="flex justify-between items-center mb-1">
       <h4 className={`text-sm font-bold ${active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-800 dark:text-slate-200'}`}>{title}</h4>
