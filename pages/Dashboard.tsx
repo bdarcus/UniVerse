@@ -69,7 +69,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
               description="A comprehensive study on integrating solar microgrids into urban infrastructure."
               status="PUBLIC"
               imageUrl="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800"
-              onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-1")}
+              onClick={() => onNavigateDetail(View.ASSESSMENT, "art-1")}
             />
             <PortfolioCard 
               title="Visualization Techniques" 
@@ -78,7 +78,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
               description="Exploration of D3.js libraries for presenting complex sociological datasets."
               status="DRAFT"
               imageUrl="https://images.unsplash.com/photo-1551288049-bbbda536639a?auto=format&fit=crop&q=80&w=800"
-              onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, "art-2")}
+              onClick={() => onNavigateDetail(View.ASSESSMENT, "art-2")}
             />
           </div>
           

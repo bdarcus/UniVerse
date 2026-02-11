@@ -2,27 +2,19 @@ import React, { useState, useMemo } from 'react';
 import { View } from '../types';
 import { GoogleGenAI } from "@google/genai";
 
+import { portfolioItems } from '../data';
+
 interface AssessmentProps {
+  id?: string | null;
   onViewChange?: (view: View) => void;
 }
 
-const ARTIFACT_CONTENT = `Reflecting on Global Leadership
-Submitted on Oct 14, 2023 at 11:45 PM
-
-Introduction
-Throughout my tenure in the Senior Experience program, I have encountered numerous challenges that have tested my ability to adapt and lead in diverse environments. My project, focused on sustainable water filtration in rural communities, required not just technical engineering skills, but a deep appreciation for cross-cultural communication. As noted by Smith (2020), "leadership is contextual," and nowhere was this more evident than in our fieldwork in Guatemala.
-
-"True leadership isn't about imposing a will, but about creating a shared vision that resonates with the values of the community you serve."
-
-Methodology & Adaptability
-We utilized a mixed-methods approach to gather feedback. Surveys were distributed to 50 households, and semi-structured interviews were conducted with key community leaders. The quantitative data revealed a 95% satisfaction rate with the water quality, but the qualitative interviews highlighted concerns about maintenance costs.
-
-Addressing these concerns required an innovative financing model. We proposed a micro-subscription service managed by a local cooperative, which would cover maintenance expenses. This solution was well-received and is currently being piloted. This experience taught me that engineering problems are often, at their core, human problems.`;
-
-const Assessment: React.FC<AssessmentProps> = ({ onViewChange }) => {
+const Assessment: React.FC<AssessmentProps> = ({ id, onViewChange }) => {
+  const artifact = portfolioItems.find(a => a.id === id) || portfolioItems[0];
+  
   const [criticalThinkingScore, setCriticalThinkingScore] = useState<number>(8); // Default to Proficient
   const [communicationLevel, setCommunicationLevel] = useState<string>('Mastering');
-  const [feedback, setFeedback] = useState("Alex, this is a strong reflection. Your analysis of the methodology needs slightly more depth in the second paragraph.");
+  const [feedback, setFeedback] = useState(artifact.feedback || "Alex, this is a strong reflection. Your analysis of the methodology needs slightly more depth.");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [awardPassport, setAwardPassport] = useState(false);
 
@@ -37,13 +29,14 @@ const Assessment: React.FC<AssessmentProps> = ({ onViewChange }) => {
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const prompt = `Analyze this student reflection artifact:
-      "${ARTIFACT_CONTENT}"
+      "Title: ${artifact.title}
+       Content: ${artifact.description}"
       
       Based on this rubric:
       1. Critical Thinking (0-10): Problem analysis and evidence usage.
       2. Written Communication (Novice, Developing, Mastering): Audience structure and clarity.
       
-      Provide a suggested score for both and a 3-sentence qualitative feedback draft that mentions the "micro-subscription model" mentioned in the text. Return as text.`;
+      Provide a suggested score for both and a 3-sentence qualitative feedback draft. Return as text.`;
       
       const response = await ai.models.generateContent({
         model: 'gemini-3-pro-preview',
@@ -67,6 +60,14 @@ const Assessment: React.FC<AssessmentProps> = ({ onViewChange }) => {
       <section className="flex-1 bg-slate-100 dark:bg-[#101622] overflow-y-auto p-8 relative flex flex-col items-center custom-scrollbar">
         {/* Viewer Controls */}
         <div className="sticky top-0 mb-8 bg-white dark:bg-[#1a202c] shadow-lg rounded-full px-6 py-2.5 flex items-center gap-6 z-10 border border-slate-200 dark:border-slate-700">
+          <button 
+            onClick={() => onViewChange?.(View.DASHBOARD)}
+            className="flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-primary transition-colors"
+          >
+            <span className="material-icons text-sm">arrow_back</span>
+            Back
+          </button>
+          <div className="w-px h-6 bg-slate-200 dark:bg-slate-600"></div>
           <div className="flex items-center gap-2">
             <button className="p-1.5 text-slate-500 hover:text-primary transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full"><span className="material-icons text-lg">zoom_out</span></button>
             <span className="text-xs font-mono font-bold text-slate-600 dark:text-slate-300 w-12 text-center">100%</span>
@@ -88,47 +89,47 @@ const Assessment: React.FC<AssessmentProps> = ({ onViewChange }) => {
           </div>
 
           <div className="mb-12 border-b border-slate-100 dark:border-slate-700 pb-8">
-            <h2 className="text-4xl font-display font-bold text-slate-900 dark:text-white mb-4">Reflecting on Global Leadership</h2>
+            <h2 className="text-4xl font-display font-bold text-slate-900 dark:text-white mb-4">{artifact.title}</h2>
             <div className="flex items-center gap-4 text-sm text-slate-500">
               <span className="flex items-center gap-1"><span className="material-icons text-sm">person</span> Alex Morgan</span>
-              <span className="flex items-center gap-1"><span className="material-icons text-sm">event</span> Oct 14, 2023 at 11:45 PM</span>
+              <span className="flex items-center gap-1"><span className="material-icons text-sm">event</span> {artifact.date}</span>
+              <span className="bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-[10px] font-bold text-primary tracking-wider uppercase">{artifact.category}</span>
             </div>
           </div>
           
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Introduction</h3>
-          <p className="mb-6 text-lg">
-            Throughout my tenure in the Senior Experience program, I have encountered numerous challenges that have tested my ability to adapt and lead in diverse environments. My project, focused on sustainable water filtration in rural communities, required not just technical engineering skills, but a deep appreciation for cross-cultural communication. As noted by Smith (2020), "leadership is contextual," and nowhere was this more evident than in our fieldwork in Guatemala.
-          </p>
-          
-          <div className="my-10 p-8 bg-slate-50 dark:bg-slate-800 rounded-2xl border-l-8 border-primary shadow-inner">
-            <p className="italic text-xl text-slate-600 dark:text-slate-400 font-medium">
-              "True leadership isn't about imposing a will, but about creating a shared vision that resonates with the values of the community you serve."
+          <div className="prose prose-slate dark:prose-invert max-w-none">
+            <p className="text-lg leading-relaxed mb-6">
+              {artifact.description}
             </p>
-          </div>
-          
-          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Methodology & Adaptability</h3>
-          <p className="mb-6 text-lg leading-relaxed">
-            We utilized a mixed-methods approach to gather feedback. Surveys were distributed to 50 households, and semi-structured interviews were conducted with key community leaders. The quantitative data revealed a 95% satisfaction rate with the water quality, but the qualitative interviews highlighted concerns about maintenance costs.
-          </p>
-          
-          <div className="w-full h-80 bg-slate-100 dark:bg-slate-800 rounded-2xl mb-10 relative overflow-hidden group shadow-md border border-slate-200 dark:border-slate-700">
-            <img 
-              alt="Field team" 
-              className="w-full h-full object-cover opacity-95 group-hover:scale-110 transition-transform duration-1000" 
-              src="https://picsum.photos/seed/field-team/1200/600"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <p className="text-white text-base font-bold flex items-center gap-2">
-                <span className="material-icons">image</span>
-                Figure 1: Field team analyzing survey data in-situ.
+            
+            <div className="my-10 p-8 bg-slate-50 dark:bg-slate-800 rounded-2xl border-l-8 border-primary shadow-inner">
+              <p className="italic text-xl text-slate-600 dark:text-slate-400 font-medium">
+                "Evidence-based learning requires a bridge between theory and practice, which this project aims to demonstrate."
               </p>
             </div>
+
+            <div className="w-full h-96 bg-slate-100 dark:bg-slate-800 rounded-2xl mb-10 relative overflow-hidden group shadow-md border border-slate-200 dark:border-slate-700">
+              <img 
+                alt={artifact.title} 
+                className="w-full h-full object-cover opacity-95 group-hover:scale-105 transition-transform duration-1000" 
+                src={artifact.imageUrl}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <p className="text-white text-base font-bold flex items-center gap-2">
+                  <span className="material-icons">image</span>
+                  Visual Artifact Evidence
+                </p>
+              </div>
+            </div>
+
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Competency Reflection</h3>
+            <p className="text-lg leading-relaxed mb-6">
+              This artifact demonstrates my proficiency in {artifact.skills?.join(', ')}. 
+              By synthesizing practical application with theoretical frameworks, I have developed a deeper 
+              understanding of {artifact.category} challenges.
+            </p>
           </div>
-          
-          <p className="mb-6 text-lg leading-relaxed">
-            Addressing these concerns required an innovative financing model. We proposed a micro-subscription service managed by a local cooperative, which would cover maintenance expenses. This solution was well-received and is currently being piloted. This experience taught me that engineering problems are often, at their core, human problems.
-          </p>
         </div>
         <div className="h-24 w-full shrink-0"></div>
       </section>

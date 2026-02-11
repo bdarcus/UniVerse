@@ -20,8 +20,11 @@
 ## Phase 2: Deep Assessment & Academic Rigor (The "Skeptic Killer")
 **Objective:** Prove this is a pedagogical tool, not just a social profile.
 *   **Feature: Competency Mapping.** Connect every artifact to specific learning outcomes (e.g., "Critical Thinking", "Quantitative Reasoning").
-    *   *Status:* **In Progress.** Added `skills` data model and visualization in Portfolio view.
+    *   *Status:* **Complete (Prototype).** Added `skills` data model, visualization in Portfolio view, and competency context in Assessment view.
 *   **Feature: Validated Assessment.** Implement the `Assessment` view where faculty can grade specific artifacts against a rubric.
+    *   *Status:* **In Progress.** Implemented dynamic artifact loading, dashboard-to-assessment navigation, and AI-assisted grading integration.
+*   **Feature: Reflection Feedback Loop.** Ensure faculty feedback and grades are persisted back to the artifact and visible to the student.
+    *   *Status:* **Next Up.**
 *   **Research Integration:** *Reflective Practice* (Dewey/Schön).
     *   Add a "Reflection" step before an artifact is published.
     *   *Prompt:* "What did you struggle with in this project?"

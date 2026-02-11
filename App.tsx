@@ -32,7 +32,7 @@ const App: React.FC = () => {
       case View.SUBMISSION:
         return <Submission id={selectedItemId} onViewChange={setActiveView} />;
       case View.ASSESSMENT:
-        return <Assessment onViewChange={setActiveView} />;
+        return <Assessment id={selectedItemId} onViewChange={setActiveView} />;
       case View.EVENTS:
         return <Events onViewChange={setActiveView} />;
       case View.SETTINGS:
