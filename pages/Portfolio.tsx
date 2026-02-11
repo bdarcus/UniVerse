@@ -9,6 +9,7 @@ interface PortfolioProps {
 
 const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail }) => {
   const [activeTab, setActiveTab] = useState<'passport' | 'artifacts'>('passport');
+  const [showShareModal, setShowShareModal] = useState(false);
   const portfolioItems = usePortfolioItems();
 
   return (
@@ -31,7 +32,10 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
               <span className="material-icons text-base mr-2">ios_share</span>
               Export
             </button>
-            <button className="inline-flex items-center px-4 py-2.5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-primary hover:bg-blue-700 transition-all shadow-blue-500/25">
+            <button 
+              onClick={() => setShowShareModal(true)}
+              className="inline-flex items-center px-4 py-2.5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-primary hover:bg-blue-700 transition-all shadow-blue-500/25"
+            >
               <span className="material-icons text-base mr-2">public</span>
               Public Profile
             </button>
@@ -140,6 +144,49 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
           </div>
         )}
       </div>
+
+      {/* Share Modal Simulation */}
+      {showShareModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white dark:bg-[#151b2b] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-300">
+            <div className="p-8 text-center space-y-6">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto text-primary">
+                <span className="material-icons text-4xl">public</span>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Share Your Professional Story</h3>
+                <p className="text-sm text-slate-500">Generate a secure, public-facing link to your unified portfolio for employers.</p>
+              </div>
+              
+              <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-3 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
+                <input 
+                  readOnly 
+                  value="https://universe.edu/p/alex-morgan-74b2" 
+                  className="bg-transparent border-none text-xs font-mono text-slate-500 flex-1 focus:ring-0"
+                />
+                <button 
+                  onClick={() => {
+                    alert('Link copied to clipboard!');
+                    setShowShareModal(false);
+                  }}
+                  className="p-2 bg-primary text-white rounded-lg hover:bg-blue-700"
+                >
+                  <span className="material-icons text-sm">content_copy</span>
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-2 pt-2">
+                <button 
+                  onClick={() => setShowShareModal(false)}
+                  className="w-full py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

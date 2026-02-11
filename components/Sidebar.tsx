@@ -20,6 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, onViewChange }) => {
 
   const extracurricularItems = [
     { id: View.ASSESSMENT, label: 'Faculty View', icon: 'rate_review' },
+    { id: View.ANALYTICS, label: 'Department Analytics', icon: 'analytics' },
     { id: View.EVENTS, label: 'Opportunity Catalog', icon: 'explore' },
   ];
 
