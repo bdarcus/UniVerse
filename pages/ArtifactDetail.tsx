@@ -141,8 +141,6 @@ const ArtifactDetail: React.FC<ArtifactDetailProps> = ({ id, onViewChange }) => 
               </div>
             )}
 
-            )}
-
             {!isPublic && (
               <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
                 <div className="flex items-center gap-3 mb-6">
