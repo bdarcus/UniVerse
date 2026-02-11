@@ -87,13 +87,15 @@ export const portfolioItems: PortfolioItem[] = [
     category: "Engineering",
     date: "Oct 24, 2023",
     description: "A comprehensive study on integrating solar microgrids into urban infrastructure.",
+    reflection: "This project challenged me to move beyond technical engineering specs and consider the economic ethics of energy access. By developing the micro-subscription model, I realized that technical solutions are only as good as the social structures that support them. This connects deeply to my earlier work in Philosophy on moral agency.",
     status: "GRADED",
     grade: "A",
     credits: "4.0",
     faculty: "Dr. Elena Rodriguez",
     feedback: "Exceptional research Alex. Your focus on the micro-subscription model is particularly innovative.",
     imageUrl: "https://picsum.photos/seed/grid/800/600",
-    skills: ["Sustainable Design", "Urban Planning", "Systems Thinking"]
+    skills: ["Sustainable Design", "Urban Planning", "Systems Thinking"],
+    connections: ["art-3"] // Connecting to Ethics in AI
   },
   {
     id: "art-2",
@@ -101,6 +103,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: "Data Science",
     date: "Nov 02, 2023",
     description: "Exploration of D3.js libraries for presenting complex sociological datasets.",
+    reflection: "I chose this artifact because it represents the moment I understood how to make 'invisible learning visible.' Data visualization isn't just about pretty charts; it's a rhetorical tool for advocacy. I had to struggle with accessibility (WCAG) which taught me about digital equity.",
     status: "GRADED",
     grade: "B+",
     credits: "3.0",
@@ -116,7 +119,9 @@ export const portfolioItems: PortfolioItem[] = [
     status: "DRAFT",
     date: "Dec 01, 2023",
     description: "A philosophical inquiry into the moral agency of artificial intelligence.",
+    reflection: "Working on this paper helped me bridge the gap between my CS major and my interest in ethics. It made me realize that as a future developer, I am also a moral agent whose code has consequences.",
     imageUrl: "https://picsum.photos/seed/ethics/800/600",
-    skills: ["Critical Thinking", "Ethics"]
+    skills: ["Critical Thinking", "Ethics"],
+    connections: ["art-1"]
   }
 ];

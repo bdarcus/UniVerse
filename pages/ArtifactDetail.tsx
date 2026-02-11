@@ -68,6 +68,16 @@ const ArtifactDetail: React.FC<ArtifactDetailProps> = ({ id, onViewChange }) => 
                 </div>
               </div>
               <div className="p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 text-primary flex items-center justify-center">
+                    <span className="material-icons">psychology</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Student Reflection</h3>
+                </div>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed italic border-l-4 border-primary/20 pl-6 py-2 mb-8 bg-slate-50/50 dark:bg-slate-800/30 rounded-r-xl">
+                  {artifact.reflection || "No reflection has been written for this artifact yet. Reflection is a critical part of the 'Folio Thinking' process—it helps you connect your work to your broader learning journey."}
+                </p>
+
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Executive Summary</h3>
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
                   {artifact.description}
@@ -91,6 +101,42 @@ const ArtifactDetail: React.FC<ArtifactDetailProps> = ({ id, onViewChange }) => 
                 </div>
               </div>
             </div>
+
+            {artifact.connections && artifact.connections.length > 0 && (
+              <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                    <span className="material-icons">hub</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">Integrative Connections</h3>
+                    <p className="text-xs text-slate-500">How this work links to other learning experiences</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {artifact.connections.map(connId => {
+                    const linkedItem = portfolioItems.find(i => i.id === connId);
+                    if (!linkedItem) return null;
+                    return (
+                      <div 
+                        key={connId}
+                        onClick={() => onViewChange(View.ARTIFACT_DETAIL)} // Simplified for prototype
+                        className="flex items-center gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-primary/50 transition-all cursor-pointer group bg-slate-50/50 dark:bg-slate-800/20"
+                      >
+                        <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0">
+                          <img src={linkedItem.imageUrl} alt="" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="overflow-hidden text-left">
+                          <p className="text-xs font-bold text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors">{linkedItem.title}</p>
+                          <p className="text-[10px] text-slate-500 uppercase font-medium">{linkedItem.category}</p>
+                        </div>
+                        <span className="material-icons text-slate-300 group-hover:text-primary ml-auto text-sm transition-colors">arrow_forward</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
               <div className="flex items-center gap-3 mb-6">

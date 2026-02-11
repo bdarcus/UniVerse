@@ -14,6 +14,7 @@ import ArtifactDetail from './pages/ArtifactDetail';
 import BadgeDetail from './pages/BadgeDetail';
 import PeerReview from './pages/PeerReview';
 import Analytics from './pages/Analytics';
+import DevTools from './components/DevTools';
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>(View.DASHBOARD);
@@ -84,6 +85,7 @@ const App: React.FC = () => {
           {renderContent()}
         </main>
       </div>
+      <DevTools />
     </div>
   );
 };

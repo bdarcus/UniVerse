@@ -1,7 +1,7 @@
 import React from 'react';
-import { View } from '../types';
+import { View, UserRole } from '../types';
 import { assignments } from '../data';
-import { usePortfolioItems } from '../store';
+import { usePortfolioItems, useAppContext } from '../store';
 
 interface DashboardProps {
   onViewChange: (view: View) => void;
@@ -10,7 +10,93 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail }) => {
   const portfolioItems = usePortfolioItems();
+  const { role } = useAppContext();
   const recentArtifacts = portfolioItems.slice(0, 2);
+
+  if (role === UserRole.FACULTY) {
+    return (
+      <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 text-left">
+          <div className="space-y-1">
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Program Dashboard</h1>
+            <p className="text-slate-500 dark:text-slate-400">Engineering & Systems Design Department</p>
+          </div>
+          <div className="flex gap-3">
+             <button className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold flex items-center gap-2">
+               <span className="material-icons text-sm">download</span> Export Report
+             </button>
+          </div>
+        </header>
+
+        {/* Faculty Stats */}
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StatCard label="Review Queue" value="8" subText="3 High Priority" icon="rate_review" color="blue" onClick={() => onViewChange(View.ASSESSMENT)} />
+          <StatCard label="Avg. Competency" value="3.4" subText="Across 124 students" icon="leaderboard" color="emerald" />
+          <StatCard label="Badges Issued" value="42" subText="This Semester" icon="military_tech" color="amber" />
+          <StatCard label="Flagged Submissions" value="2" subText="Requires Attention" icon="report_problem" color="rose" />
+        </section>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
+          <section className="lg:col-span-2 space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <span className="material-icons text-primary">pending_actions</span> Recent Submissions
+              </h2>
+              <button onClick={() => onViewChange(View.ASSESSMENT)} className="text-sm font-medium text-primary">View All</button>
+            </div>
+            
+            <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+                  <tr>
+                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-[10px] tracking-widest">Student</th>
+                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-[10px] tracking-widest">Artifact</th>
+                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-[10px] tracking-widest">Status</th>
+                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-[10px] tracking-widest">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                  {[
+                    { student: 'Alex Morgan', artifact: 'Capstone: Renewable Grid', status: 'Pending Review' },
+                    { student: 'Jordan Rivers', artifact: 'Journalism Ethics Paper', status: 'Draft' },
+                    { student: 'Casey Bloom', artifact: 'Modular Housing Prototype', status: 'Pending Review' },
+                  ].map((row, i) => (
+                    <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                      <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">{row.student}</td>
+                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400">{row.artifact}</td>
+                      <td className="px-6 py-4">
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${row.status === 'Pending Review' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-500'}`}>
+                          {row.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <button className="text-primary font-bold hover:underline">Grade</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="space-y-6">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span className="material-icons text-primary">pie_chart</span> Competency Map
+            </h2>
+            <div className="bg-white dark:bg-[#151b2b] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+               <div className="space-y-4">
+                 <CompetencyRow label="Critical Thinking" value={85} color="blue" />
+                 <CompetencyRow label="Digital Literacy" value={92} color="emerald" />
+                 <CompetencyRow label="Ethical Reasoning" value={74} color="amber" />
+                 <CompetencyRow label="Communication" value={88} color="rose" />
+               </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
       {/* Stats Cards */}
@@ -167,6 +253,26 @@ const Dashboard: React.FC<DashboardProps> = ({ onViewChange, onNavigateDetail })
           </div>
         </div>
       </section>
+    </div>
+  );
+};
+
+const CompetencyRow = ({ label, value, color }: any) => {
+  const colors: any = {
+    blue: 'bg-blue-500',
+    emerald: 'bg-emerald-500',
+    amber: 'bg-amber-500',
+    rose: 'bg-rose-500'
+  };
+  return (
+    <div className="space-y-1.5">
+      <div className="flex justify-between text-xs font-bold">
+        <span className="text-slate-600 dark:text-slate-400">{label}</span>
+        <span className="text-slate-900 dark:text-white">{value}%</span>
+      </div>
+      <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
+        <div className={`h-1.5 rounded-full ${colors[color]}`} style={{ width: `${value}%` }}></div>
+      </div>
     </div>
   );
 };

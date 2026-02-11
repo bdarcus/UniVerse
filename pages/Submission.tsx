@@ -100,19 +100,27 @@ const Submission: React.FC<SubmissionProps> = ({ id, onViewChange }) => {
               value={reflection}
               onChange={(e) => setReflection(e.target.value)}
               className="w-full min-h-[600px] bg-transparent border-none p-0 text-lg leading-relaxed text-slate-800 dark:text-slate-300 focus:ring-0 placeholder:text-slate-200 dark:placeholder:text-slate-700 resize-none font-sans"
-              placeholder="Start writing your reflection here... Mention specific evidence from your fieldwork and how you applied critical thinking."
+              placeholder="Start writing your reflection (the 'Why') here... 
+              
+Consider these Folio Thinking prompts:
+1. What was the hardest part of this assignment and what did it teach you?
+2. How does this work connect to other courses or experiences?
+3. What artifact from your repository does this build upon?"
             ></textarea>
 
             <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
-              <p className="text-xs font-bold text-slate-400 uppercase mb-4">Supporting Attachments</p>
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-xs font-bold text-slate-400 uppercase">Integrative Connections</p>
+                <span className="text-[10px] text-primary font-bold uppercase tracking-widest bg-primary/10 px-2 py-0.5 rounded">Process &rarr; Product</span>
+              </div>
               <div className="flex flex-wrap gap-4">
                 <button className="flex flex-col items-center justify-center w-24 h-24 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-800 hover:border-primary transition-all group">
-                   <span className="material-icons text-slate-300 group-hover:text-primary mb-1">add</span>
-                   <span className="text-[10px] font-bold text-slate-400 group-hover:text-primary uppercase">Add Link</span>
+                   <span className="material-icons text-slate-300 group-hover:text-primary mb-1">hub</span>
+                   <span className="text-[10px] font-bold text-slate-400 group-hover:text-primary uppercase">Link Artifact</span>
                 </button>
                 <button className="flex flex-col items-center justify-center w-24 h-24 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-800 hover:border-primary transition-all group">
                    <span className="material-icons text-slate-300 group-hover:text-primary mb-1">upload</span>
-                   <span className="text-[10px] font-bold text-slate-400 group-hover:text-primary uppercase">Upload</span>
+                   <span className="text-[10px] font-bold text-slate-400 group-hover:text-primary uppercase">Attach File</span>
                 </button>
               </div>
             </div>

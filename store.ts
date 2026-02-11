@@ -1,11 +1,13 @@
 
 import { useState, useEffect } from 'react';
 import { portfolioItems as initialItems } from './data';
-import { PortfolioItem } from './types';
+import { PortfolioItem, UserRole, ViewContext } from './types';
 
 // Simple session-based store to simulate persistence in the prototype
 class PortfolioStore {
   private items: PortfolioItem[] = [...initialItems];
+  private currentRole: UserRole = UserRole.STUDENT;
+  private currentContext: ViewContext = ViewContext.PRIVATE;
   private listeners: (() => void)[] = [];
 
   getItems() {
@@ -14,6 +16,24 @@ class PortfolioStore {
 
   getItem(id: string | null) {
     return this.items.find(item => item.id === id) || this.items[0];
+  }
+
+  getRole() {
+    return this.currentRole;
+  }
+
+  setRole(role: UserRole) {
+    this.currentRole = role;
+    this.notify();
+  }
+
+  getContext() {
+    return this.currentContext;
+  }
+
+  setContext(context: ViewContext) {
+    this.currentContext = context;
+    this.notify();
   }
 
   updateItem(id: string, updates: Partial<PortfolioItem>) {
@@ -47,4 +67,26 @@ export const usePortfolioItems = () => {
   }, []);
 
   return items;
+};
+
+export const useAppContext = () => {
+  const [state, setState] = useState({
+    role: portfolioStore.getRole(),
+    context: portfolioStore.getContext()
+  });
+
+  useEffect(() => {
+    return portfolioStore.subscribe(() => {
+      setState({
+        role: portfolioStore.getRole(),
+        context: portfolioStore.getContext()
+      });
+    });
+  }, []);
+
+  return {
+    ...state,
+    setRole: (role: UserRole) => portfolioStore.setRole(role),
+    setContext: (context: ViewContext) => portfolioStore.setContext(context)
+  };
 };

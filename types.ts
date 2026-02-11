@@ -13,12 +13,23 @@ export enum View {
   ANALYTICS = 'analytics'
 }
 
+export enum UserRole {
+  STUDENT = 'student',
+  FACULTY = 'faculty'
+}
+
+export enum ViewContext {
+  PRIVATE = 'private',
+  PUBLIC = 'public'
+}
+
 export interface PortfolioItem {
   id: string;
   title: string;
   category: string;
   date: string;
-  description: string;
+  description: string; // The "What" (Artifact description)
+  reflection?: string;  // The "Why" (Metacognitive narrative)
   imageUrl: string;
   status: 'PUBLIC' | 'DRAFT' | 'GRADED';
   grade?: string;
@@ -26,6 +37,7 @@ export interface PortfolioItem {
   faculty?: string;
   credits?: string;
   skills?: string[];
+  connections?: string[]; // IDs of related artifacts or badges
 }
 
 export interface Achievement {

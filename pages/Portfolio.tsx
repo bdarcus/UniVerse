@@ -11,35 +11,55 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
   const [activeTab, setActiveTab] = useState<'passport' | 'artifacts'>('passport');
   const [showShareModal, setShowShareModal] = useState(false);
   const portfolioItems = usePortfolioItems();
+  const { context } = useAppContext();
+  const isPublic = context === ViewContext.PUBLIC;
 
   return (
     <div className="animate-in slide-in-from-bottom-4 duration-500 pb-20">
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+        {isPublic && (
+          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-4 rounded-2xl flex items-center gap-4 animate-in fade-in duration-500">
+            <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-800 flex items-center justify-center text-amber-600 dark:text-amber-400">
+              <span className="material-icons">visibility</span>
+            </div>
+            <div className="text-left">
+              <p className="text-sm font-bold text-amber-900 dark:text-amber-200">Public Showcase View</p>
+              <p className="text-xs text-amber-700 dark:text-amber-400">This is what employers see. Internal grades, draft artifacts, and private reflections are hidden.</p>
+            </div>
+          </div>
+        )}
+
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
           <div className="space-y-2 text-left">
             <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
               <span className="hover:text-primary cursor-pointer" onClick={() => onViewChange(View.DASHBOARD)}>Home</span>
               <span className="material-icons text-xs">chevron_right</span>
-              <span className="text-primary font-medium">Portfolio</span>
+              <span className="text-primary font-medium">{isPublic ? 'Public Showcase' : 'Portfolio'}</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">Unified Portfolio</h1>
-            <p className="text-slate-600 dark:text-slate-400 max-w-2xl">
-              A comprehensive record of your academic artifacts and extracurricular milestones.
+            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
+              {isPublic ? "Alex Morgan's Showcase" : 'Unified Portfolio'}
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl text-left">
+              {isPublic 
+                ? 'A curated selection of my professional artifacts, competencies, and verified achievements.'
+                : 'Manage your academic repository and curate professional showcases that demonstrate your learning journey.'}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="inline-flex items-center px-4 py-2.5 border border-slate-300 dark:border-slate-600 shadow-sm text-sm font-medium rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-              <span className="material-icons text-base mr-2">ios_share</span>
-              Export
-            </button>
-            <button 
-              onClick={() => setShowShareModal(true)}
-              className="inline-flex items-center px-4 py-2.5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-primary hover:bg-blue-700 transition-all shadow-blue-500/25"
-            >
-              <span className="material-icons text-base mr-2">public</span>
-              Public Profile
-            </button>
-          </div>
+          {!isPublic && (
+            <div className="flex items-center gap-3">
+              <button className="inline-flex items-center px-4 py-2.5 border border-slate-300 dark:border-slate-600 shadow-sm text-sm font-medium rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                <span className="material-icons text-base mr-2">ios_share</span>
+                Export
+              </button>
+              <button 
+                onClick={() => setShowShareModal(true)}
+                className="inline-flex items-center px-4 py-2.5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-primary hover:bg-blue-700 transition-all shadow-blue-500/25"
+              >
+                <span className="material-icons text-base mr-2">collections</span>
+                Curate Showcase
+              </button>
+            </div>
+          )}
         </header>
 
         {/* Tab System */}
@@ -52,7 +72,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
-            Passport (Badges)
+            {isPublic ? 'Verified Badges' : 'Passport (Badges)'}
             {activeTab === 'passport' && (
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
             )}
@@ -65,7 +85,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
-            Artifacts (Projects)
+            {isPublic ? 'Featured Projects' : 'Repository (Workspace)'}
             {activeTab === 'artifacts' && (
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full"></div>
             )}
@@ -74,13 +94,14 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
 
         {activeTab === 'passport' ? (
           <div className="space-y-8 animate-in fade-in duration-300 text-left">
-            {/* Stats Summary */}
-            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <StatMiniCard icon="military_tech" label="Badges Earned" value="12" color="blue" />
-              <StatMiniCard icon="schedule" label="Hours Logged" value="48.5" color="green" />
-              <StatMiniCard icon="trending_up" label="Current Level" value="Gold" color="purple" />
-              <StatMiniCard icon="pending_actions" label="In Progress" value="5" color="orange" />
-            </section>
+            {!isPublic && (
+              <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <StatMiniCard icon="military_tech" label="Badges Earned" value="12" color="blue" />
+                <StatMiniCard icon="schedule" label="Hours Logged" value="48.5" color="green" />
+                <StatMiniCard icon="trending_up" label="Current Level" value="Gold" color="purple" />
+                <StatMiniCard icon="pending_actions" label="In Progress" value="5" color="orange" />
+              </section>
+            )}
 
             {/* Achievement Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -94,17 +115,21 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 footer="Oct 24, 2023"
                 onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-crw")}
               />
-              <AchievementCard 
-                icon="volunteer_activism" 
-                title="Civic Engagement Leader" 
-                category="Community Service" 
-                description="Lead at least 3 community service events and log 20+ hours of volunteer work."
-                progress={75}
-                progressText="15 / 20 Hours"
-                footer="Last updated 2d ago"
-                actionLabel="Log Hours"
-                onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cel")}
-              />
+              {(!isPublic || false) && ( // Example of hiding in-progress for public
+                <>
+                  <AchievementCard 
+                    icon="volunteer_activism" 
+                    title="Civic Engagement Leader" 
+                    category="Community Service" 
+                    description="Lead at least 3 community service events and log 20+ hours of volunteer work."
+                    progress={75}
+                    progressText="15 / 20 Hours"
+                    footer="Last updated 2d ago"
+                    actionLabel={isPublic ? undefined : "Log Hours"}
+                    onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cel")}
+                  />
+                </>
+              )}
               <AchievementCard 
                 icon="groups" 
                 title="Club Officer Track" 
@@ -113,7 +138,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 progress={25}
                 progressText="1 / 4 Months"
                 footer="Ongoing"
-                actionLabel="Details"
+                actionLabel={isPublic ? undefined : "Details"}
                 onActionClick={() => onNavigateDetail(View.BADGE_DETAIL, "badge-cot")}
               />
             </div>
@@ -121,25 +146,29 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
         ) : (
           <div className="space-y-8 animate-in fade-in duration-300 text-left">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {portfolioItems.map(item => (
+              {portfolioItems
+                .filter(item => !isPublic || item.status === 'GRADED' || item.status === 'PUBLIC')
+                .map(item => (
                 <ArtifactProjectCard 
                   key={item.id}
                   title={item.title} 
                   category={item.category} 
                   status={item.status} 
-                  grade={item.grade}
+                  grade={!isPublic ? item.grade : undefined} // Hide grade in public view
                   imageUrl={item.imageUrl}
                   skills={item.skills}
                   onClick={() => onNavigateDetail(View.ARTIFACT_DETAIL, item.id)}
                 />
               ))}
-              <div 
-                onClick={() => onViewChange(View.SUBMISSION)}
-                className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer h-full min-h-[250px]"
-              >
-                <span className="material-icons text-3xl text-slate-400 group-hover:text-primary mb-2">add_circle_outline</span>
-                <p className="text-sm font-bold text-slate-600 dark:text-slate-400">Add Project Artifact</p>
-              </div>
+              {!isPublic && (
+                <div 
+                  onClick={() => onViewChange(View.SUBMISSION)}
+                  className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center p-8 text-center hover:border-primary hover:bg-primary/5 transition-all group cursor-pointer h-full min-h-[250px]"
+                >
+                  <span className="material-icons text-3xl text-slate-400 group-hover:text-primary mb-2">add_circle_outline</span>
+                  <p className="text-sm font-bold text-slate-600 dark:text-slate-400">Add Project Artifact</p>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -154,19 +183,30 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewChange, onNavigateDetail })
                 <span className="material-icons text-4xl">public</span>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Share Your Professional Story</h3>
-                <p className="text-sm text-slate-500">Generate a secure, public-facing link to your unified portfolio for employers.</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Curate Your Showcase</h3>
+                <p className="text-sm text-slate-500">Select which artifacts from your repository to include in this audience-specific view (e.g., for an employer or graduate school).</p>
               </div>
               
+              <div className="space-y-3 text-left">
+                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest px-1">Selected Artifacts</p>
+                {portfolioItems.slice(0, 2).map(item => (
+                  <div key={item.id} className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                    <img src={item.imageUrl} className="w-8 h-8 rounded object-cover" alt="" />
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex-1 truncate">{item.title}</span>
+                    <span className="material-icons text-primary text-sm">check_circle</span>
+                  </div>
+                ))}
+              </div>
+
               <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-3 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
                 <input 
                   readOnly 
-                  value="https://universe.edu/p/alex-morgan-74b2" 
-                  className="bg-transparent border-none text-xs font-mono text-slate-500 flex-1 focus:ring-0"
+                  value="https://universe.edu/showcase/alex-morgan-ux" 
+                  className="bg-transparent border-none text-[10px] font-mono text-slate-500 flex-1 focus:ring-0"
                 />
                 <button 
                   onClick={() => {
-                    alert('Link copied to clipboard!');
+                    alert('Showcase link copied to clipboard!');
                     setShowShareModal(false);
                   }}
                   className="p-2 bg-primary text-white rounded-lg hover:bg-blue-700"
